@@ -60,8 +60,6 @@ deploy_pumptools_game()
     cp "$piuio_path/ptapi-io-piuio-keyboard.so" "$target_pumpos_piu_dir"
     cp "$piuio_path/ptapi-io-piuio-keyboard-conf" "$target_pumpos_piu_dir"
     cp "$piuio_path/ptapi-io-piuio-real.so" "$target_pumpos_piu_dir"
-    cp "$piubtn_path/ptapi-io-piubtn-keyboard.so" "$target_pumpos_piu_dir"
-    cp "$piubtn_path/ptapi-io-piubtn-real.so" "$target_pumpos_piu_dir"
 }
 
 deploy_pumptool_unpack()
@@ -111,7 +109,7 @@ deploy_pumptools()
 
     local pumptools_unpack_path="$target_pumpos_piu_dir/tmp/pt-depl/pumptools"
     local pumptools_version
-    pumptools_version="$(cat "$pumptools_unpack_path/version")"
+    pumptools_version="$(cat "$pumptools_unpack_path/git-version")"
 
     log_info "Deploying pumptools version $pumptools_version"
     changelog_append "$target_pumpos_piu_dir/log" "deploy-pumptools" "unpacked $pumptools_version"
