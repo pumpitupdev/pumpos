@@ -25,7 +25,8 @@ GAME_VER_PT_HOOK_MAP=(
     ["12_prex2"]="mk3hook"
     ["13_prem3"]="mk3hook"
     ["14_prex3"]="mk3hook"
-    ["15_exc"]="exchook")
+    ["15_exc"]="exchook"
+    ["16_exc2"]="x2hook")
 
 deploy_pumptools_game()
 {
