@@ -1,4 +1,6 @@
 # Release history
+## 1.02
+
 ## 1.01
 * Add support for exceed 2 deployment
 * Bugfixes

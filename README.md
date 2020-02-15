@@ -1,5 +1,5 @@
 # Pumpos: Create, deploy, configure and manage a setup for running Pump It Up
-Version: 1.01</br>
+Version: 1.02</br>
 [Release history](CHANGELOG.md)
 
 ## What is this all about?
