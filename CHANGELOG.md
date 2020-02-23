@@ -1,4 +1,6 @@
 # Release history
+## 1.03
+
 ## 1.02
 * Add support for Zero deployment
 
