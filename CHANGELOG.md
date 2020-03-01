@@ -1,5 +1,6 @@
 # Release history
 ## 1.03
+* Add support for NX deployment
 
 ## 1.02
 * Add support for Zero deployment
