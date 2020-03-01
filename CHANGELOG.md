@@ -1,4 +1,6 @@
 # Release history
+## 1.04
+
 ## 1.03
 * Add support for NX deployment
 
