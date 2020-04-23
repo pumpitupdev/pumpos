@@ -41,7 +41,7 @@ verify_environment()
 	    exit 1
     fi
 
-    if [ -e "$BOOT_CFG_FILE_PATH" ]; then
+    if [ ! -e "$BOOT_CFG_FILE_PATH" ]; then
         echo "Error: Cannot find boot.cfg file."
         exit 1
     fi
