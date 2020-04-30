@@ -185,12 +185,6 @@ install_deps_sgl
 install_deps_mk3_ports
 install_deps_exc
 
-printf '%s' '#!/bin/bash
-clear
-echo "======= OS installation completed ======="
-echo "Error booting, no data deployed.
-exit 0' > /piu/boot.sh
-
 chmod +x /piu/boot.sh
 
 # Typically, you will have a user with user/group id 1000 on your host machine
@@ -203,3 +197,9 @@ systemctl enable piu
 
 echo "===== Done ====="
 echo "Installation completed. Reboot the system."
+
+printf '%s' '#!/bin/bash
+clear
+echo "======= OS installation completed ======="
+echo "Error booting, no data deployed."
+exit 0' > /piu/boot.sh
