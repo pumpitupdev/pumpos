@@ -97,7 +97,7 @@ write_to_config_file()
 ####################
 
 if [ ! "$1" ]; then
-    echo "Pumpt It Up OS Configuration Creator"
+    echo "Pump It Up OS Configuration Creator"
     echo "Usage: os-config <path to output file to save config to>"
     exit 1
 fi
