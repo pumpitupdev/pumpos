@@ -11,6 +11,23 @@ apply_network_config()
     netplan apply
 }
 
+check_internet_access()
+{
+    echo ""
+	echo "##### Checking internet access... #####"
+
+	# Let's consider Google = Internet *shrug*
+    if ping -q -c 1 -W 5 8.8.8.8 > /dev/null; then
+        echo "IPv4 is up, internet access ok."
+    else
+        echo "IPv4 is down, no internet access."
+        echo "Ensure you have a network cable plugged in that this machine is not blocked by your router."
+        echo "To retry, reboot this machine."
+        echo "Halting."
+        sleep infinity
+    fi
+}
+
 set_timezone()
 {
     echo ""
@@ -168,11 +185,13 @@ echo "Note: If this script encounters any errors it will abort and not complete!
 echo "Installation continues in 10 seconds..."
 sleep 10
 
+apply_network_config
+check_internet_access
+
 # Disable the piu script as some installation steps trigger a restart of this
 # for unknown reasons which crashes the installtion process
 systemctl disable piu
 
-apply_network_config
 set_timezone
 enable_multiarch
 install_ssh
