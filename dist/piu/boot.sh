@@ -116,7 +116,8 @@ boot_mode_game()
             exit 1
         else
             # Finally boot the game defined by gameboot bootstrap file
-            "$DATA_DIR/$boot_cfg_mode_game_selected/run.sh"
+            # Games require to have the working directory set to the game's root folder
+            cd "$DATA_DIR/$boot_cfg_mode_game_selected" && ./run.sh
 
             # Replace the current session with a new one to avoid recrusive
             # calls and restarting the game
