@@ -130,12 +130,31 @@ the `conf-boot` command, e.g. to boot 01_1st
 1. Connect the disk back to your target hardware.
 1. Boot the target hardware and it should start the configured game.
 
-### Use the scripts to deploy data and configure local setups on a host
+### Use scripts to deploy data and configure local setups on a host
 For development and testing, you can also use the scripts to deploy/update data
 on the same host machine. Instead of specifying paths to a mounted disk on the
 commands `deploy-base`, `deploy-data`, `deploy-pumptools` and `conf-pumptools`,
 just set it to a local folder. Any other commands are not required for such a
 setup and can be ignored.
+
+### Use scripts to deploy and configure SGL (Simple Game Loader)
+SGL provides a front-end to select a game of your choice on a setup with multiple
+games on a single installation.
+
+In order to enable that, you have to add the following steps to the deployment
+and configuration process, e.g. before the end when
+[unmounting the disk](#using-the-scripts):
+1. Download or compile the SGL binary distribution package for Linux. See the
+`sgl` repository for instructions. You need the `sgl-linux.zip` output file.
+1. Have the `piu` data from the `sgldata` repository ready on your host
+machine.
+1. Deploy SGL: `./pumpos.sh deploy-sgl /mnt/pumpos/piu /path/to/sgl-linux.zip /path/to/sgldata/data/piu`
+1. Configure the boot process to run SGL on boot: `./pumpos.sh conf-boot /mnt/pumpos/piu sgl`
+1. Unmount: `umount /mnt/pumpos` 
+1. Disconnect the disk attached to your host.
+1. Connect the disk back to your target hardware.
+1. Boot the target hardware and it should start SGL which allows you to select
+the game that you want to play.
 
 ## License
 Source code license is the Unlicense; you are permitted to do with this as thou
