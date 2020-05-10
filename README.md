@@ -15,6 +15,18 @@ correctly. You are advised to read any on-screen instructions and
 readme/documentation before using them. Mistakes can be as crucial as wiping
 your host machine you are running these scripts on or other kinds of data loss.
 
+## Hardware requirements
+For your host machine, the "workstation" that you use to deploy the data, anything
+that is capable of moving around data is fine.
+
+For your target remote machine, which is going to run the deployed operating system
+and games, make sure it fulfills the following requirements:
+* CPU with 64-bit support; sorry, stock MK6 hardware won't work
+* If using a Nvidia GPU: Anything that supports the 340 driver which means at least a GeForce 8 series (8000+) card 
+from around end of 2006. Sorry, but that criteria kills stock MK9 hardware which comes with a 7200. There is patched
+version of the 304 driver which supports these cards but it's hacky and not worth the additional effort, at least at
+this point in time.
+
 ## Dependencies
 Naturally, these scripts require a Linux environment, e.g. either a native
 installation running on a machine, a virtual machine or you might also be able
