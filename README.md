@@ -131,14 +131,14 @@ configure just a single game, e.g.
     `./pumpos.sh conf-pumptools /mnt/pumpos/piu ./conf/pumptools-desktop.conf`
 1. Optional: If you want to use [SGL](https://dev.s-ul.eu/hackitup/sgl) for
 bootstrapping the games, you have to deploy the binaries and assets:
-`./pumpos.sh deploy-sgl /mnt/pumpos /path/to/sgl-linux.zip /path/to/sgldata/data/piu`
+`./pumpos.sh deploy-sgl /mnt/pumpos/piu /path/to/sgl-linux.zip /path/to/sgldata/data/piu`
 1. Configure the boot process of pumpos with the `conf-boot` command defining how the
 games are bootstrapped:
     1. Single game bootstrapping: e.g. to always boot 01_1st:
-    `./pumpos.sh conf-boot /mnt/pumpos game 01_1st`
+    `./pumpos.sh conf-boot /mnt/pumpos/piu game 01_1st`
     1. SGL bootstrapping (requires SGL deployed): 
-    `./pumpos.sh conf-boot /mnt/pumpos sgl`
-1. Unmount: `umount /mnt/pumpos` 
+    `./pumpos.sh conf-boot /mnt/pumpos/piu sgl`
+1. Unmount: `umount /mnt/pumpos/piu` 
 1. Disconnect the disk attached to your host.
 1. Connect the disk back to your target hardware.
 1. Boot the target hardware and it should start the configured game.
