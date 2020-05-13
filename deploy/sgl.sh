@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Includes
-source "deploy/util"
+source "util/util.sh"
 
 # Root path is path of this script
 readonly ROOT_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -33,7 +33,7 @@ deploy_sgl()
 
     log_debug "  Updating sgl assets..."
 
-    cp -r "$sgldata_data_asset_dir"/* "$target_pumpos_piu_sgl_dir"
+    cp -r "$sgldata_data_asset_dir"/* "$target_pumpos_piu_sgl_dir/data"
 
     changelog_append "$target_pumpos_piu_dir/log" "sgl" "update"
 
@@ -54,4 +54,4 @@ target_pumpos_piu_dir="$1"
 sgl_zip_path="$2"
 sgldata_data_asset_dir="$3"
 
-sgl_deploy "$target_pumpos_piu_dir" "$sgl_zip_path" "$sgldata_data_asset_dir"
+deploy_sgl "$target_pumpos_piu_dir" "$sgl_zip_path" "$sgldata_data_asset_dir"
