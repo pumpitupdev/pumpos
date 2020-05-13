@@ -28,7 +28,7 @@ readonly ROOT_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 readonly DATA_DIR="$ROOT_PATH/data"
 readonly SGL_DIR="$ROOT_PATH/sgl"
 readonly BOOT_SCRIPT_PATH="$ROOT_PATH/boot.sh"
-readonly SGL_SCRIPT_PATH="$SGL_DIR/sgl.sh"
+readonly SGL_SCRIPT_PATH="$SGL_DIR/sgl-startx.sh"
 readonly BOOT_CFG_FILE_PATH="$ROOT_PATH/boot.cfg"
 
 boot_cfg_mode=""

@@ -8,6 +8,7 @@ readonly ROOT_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 readonly LOG_MODULE="deploy-sgl"
 
 readonly DIST_ROOT_PATH="$ROOT_PATH/../dist"
+readonly DIST_ROOT_SHARED_XORG_CONF_PATH="$DIST_ROOT_PATH/shared/xorg.conf"
 readonly DIST_PIU_SGL_PATH="$DIST_ROOT_PATH/piu/sgl"
 
 deploy_sgl()
@@ -27,6 +28,7 @@ deploy_sgl()
 
     rm -rf "$target_pumpos_piu_sgl_dir"
     cp -r "$DIST_PIU_SGL_PATH" "$target_pumpos_piu_sgl_dir"
+    cp "$DIST_ROOT_SHARED_XORG_CONF_PATH/xorg-fx-480.conf" "$target_pumpos_piu_sgl_dir"
 
     log_debug "  Updating sgl binary distribution files..."
 
