@@ -7,6 +7,9 @@ source "util/util.sh"
 readonly ROOT_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 readonly LOG_MODULE="deploy-sgl"
 
+readonly DIST_ROOT_PATH="$ROOT_PATH/../dist"
+readonly DIST_PIU_SGL_PATH="$DIST_ROOT_PATH/piu/sgl"
+
 deploy_sgl()
 {
     local target_pumpos_piu_dir="$1"
@@ -23,7 +26,7 @@ deploy_sgl()
 	log_info "Deploying sgl"
 
     rm -rf "$target_pumpos_piu_sgl_dir"
-    mkdir -p "$target_pumpos_piu_sgl_dir"
+    cp -r "$DIST_PIU_SGL_PATH" "$target_pumpos_piu_sgl_dir"
 
     log_debug "  Updating sgl binary distribution files..."
 
