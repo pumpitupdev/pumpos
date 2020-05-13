@@ -11,7 +11,7 @@ return {
         path_modules = "./data/io",
 
         modules = {
-            "libio-piumk6.so",
+            "libio-piumk6",
         },
 
         isp_scripts = {
