@@ -69,6 +69,19 @@ gpu_driver()
     done
 }
 
+apt_mirror()
+{
+    echo "Optional: Please enter an apt host, e.g. a local cache (leave empty to skip)"
+    echo -n "> "
+    read -r config_apt_host
+
+    if [ "$config_apt_host" ]; then
+        echo "Please enter a mirror URL that gets appeneded to the host, e.g. eu.archive.ubuntu.com/ubuntu/ or us.archive.ubuntu.com/ubuntu/"
+        echo -n "> "
+        read -r config_apt_mirror
+    fi
+}
+
 print_summary()
 {
     echo "Summary configuration:"
@@ -76,6 +89,8 @@ print_summary()
     echo "username: $config_username"
     echo "password: ***HIDDEN***"
     echo "gpu driver: $config_gpu_driver"
+    echo "apt host (optional): $config_apt_host"
+    echo "apt mirror (optional): $config_apt_mirror"
 }
 
 write_to_config_file()
@@ -86,7 +101,9 @@ write_to_config_file()
         echo "$config_hostname"
         echo "$config_username"
         echo "$config_password"
-        echo "config_gpu_driver"
+        echo "$config_gpu_driver"
+        echo "$config_apt_host"
+        echo "$config_apt_mirror"
     } > "$out_file"
 
     echo "Config written to file $out_file"
@@ -106,6 +123,7 @@ hostname
 username
 password
 gpu_driver
+apt_mirror
 
 print_summary
 write_to_config_file "$1"

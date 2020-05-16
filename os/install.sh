@@ -55,6 +55,8 @@ read_configuration()
     config_username="$(cat "$config_file" | cut -d$'\n' -f 2)"
     config_password="$(cat "$config_file" | cut -d$'\n' -f 3)"
     config_gpu_driver="$(cat "$config_file" | cut -d$'\n' -f 4)"
+    config_apt_host="$(cat "$config_file" | cut -d$'\n' -f 5)"
+    config_apt_mirror="$(cat "$config_file" | cut -d$'\n' -f 6)"
 }
 
 configuration_confirmation()
@@ -64,6 +66,8 @@ configuration_confirmation()
     echo "username: $config_username"
     echo "password: ***HIDDEN***"
     echo "gpu driver: $config_gpu_driver"
+    echo "apt host (optional): $config_apt_host"
+    echo "apt mirror (optional): $config_apt_mirror"
 
     echo "Are these values correct? Confirm by typing yes in caps and confirm."
 
@@ -119,7 +123,7 @@ base_system_installation()
     echo "Base system installation"
     echo "##################################################################"
 
-    "$BASE_SYTEM_SCRIPT_PATH" "$config_target_disk" "$config_hostname" "$config_username" "$config_password"
+    "$BASE_SYTEM_SCRIPT_PATH" "$config_target_disk" "$config_hostname" "$config_username" "$config_password" "$config_apt_host" "$config_apt_mirror"
 
     if [ "$?" != "0" ]; then
         exit 1

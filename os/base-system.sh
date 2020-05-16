@@ -27,7 +27,7 @@ install_base_system()
     echo "##### Installing base system... #####"
 
     # Install base system, Ubuntu 18.xx LTS
-    debootstrap --arch amd64 bionic "$MOUNT_POINT_PUMPOS"
+    debootstrap --arch amd64 bionic "$MOUNT_POINT_PUMPOS" "$config_apt_host/$config_apt_mirror"
 }
 
 generate_fstab()
@@ -36,6 +36,16 @@ generate_fstab()
     echo "##### Generating fstab... #####"
 
     genfstab -U "$MOUNT_POINT_PUMPOS" > "$MOUNT_POINT_PUMPOS/etc/fstab"
+}
+
+add_apt_mirror()
+{
+    if [ "$config_apt_mirror" ]; then
+        echo ""
+        echo "##### Adding apt mirror $config_apt_host... #####"
+
+        echo "Acquire::http { Proxy \"$config_apt_host\"; };" >> "$MOUNT_POINT_PUMPOS/etc/apt/apt.conf.d/01proxy"
+    fi
 }
 
 setup_pumpos()
@@ -88,7 +98,7 @@ unmount_partition()
 ####################
 
 if [ $# -lt 4 ]; then
-    echo "Usage: $0 <target disk, e.g. sdd> <hostname> <username> <password>"
+    echo "Usage: $0 <target disk, e.g. sdd> <hostname> <username> <password> [apt host] [apt mirror]"
     exit 1
 fi
 
@@ -96,6 +106,8 @@ target_disk="$1"
 config_hostname="$2"
 config_username="$3"
 config_password="$4"
+config_apt_host="$5"
+config_apt_mirror="$6"
 
 # Exit if any command fails
 set -e
@@ -103,6 +115,7 @@ set -e
 mount_partition
 install_base_system
 generate_fstab
+add_apt_mirror
 setup_pumpos
 chroot_exec_install
 prepare_boot_post_install

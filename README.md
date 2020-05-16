@@ -169,6 +169,34 @@ machine.
 1. Boot the target hardware and it should start SGL which allows you to select
 the game that you want to play.
 
+### Enable caching layer for apt packages
+If you have to install pumpos multiple times, e.g. developing, testing or debugging, it is highly recommended
+to start the `apt-cache` docker container provided with pumpos. This container runs locally on your host
+workstation and serves all packages to download as a proxy from your local network which speeds up installation
+and build times of pumpos images a lot.
+
+To enable this caching layer:
+1. Go to the infrastructure sub-folder: `cd infrastructure`
+1. Build the `apt-cache` container image: `make build-apt-cache`
+1. Run the container: `make start-apt-cache`
+1. When finished, you can stop the container again: `make stop-apt-cache`
+1. If there are any issues, you can take a look at the logs which should show you some activity when having
+to fetch the packages from the actual remote repository to cache them: `make logs-apt-cache`
+
+Now, you have to provide the proxy's address as an apt host to the pumpos installation configuration. Make
+sure to provide it when running `./pumpos.sh os-config` as well as entering a valid mirror (suggestions are
+already given during the configuration phase).
+
+The resulting `pumpos.conf` should look similar to the following example:
+```text
+pumpos
+piu
+piu
+nvidia
+http://<some ip v4 address>:3142
+eu.archive.ubuntu.com/ubuntu/
+```
+
 ## License
 Source code license is the Unlicense; you are permitted to do with this as thou
 wilt. For details, please refer to the [LICENSE file](LICENSE) included with the
