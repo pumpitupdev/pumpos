@@ -155,13 +155,14 @@ WantedBy=multi-user.target
 Type=oneshot
 RemainAfterExit=yes
 ExecStart=/piu/boot.sh
+WorkingDirectory=/piu
 StandardInput=tty-force
 StandardOutput=inherit
 StandardError=inherit
 " > /etc/systemd/system/piu.service
 
     chmod +x /etc/systemd/system/piu.service
-	  systemctl enable piu.service
+    systemctl enable piu.service
 }
 
 ####################
