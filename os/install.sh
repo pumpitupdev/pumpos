@@ -126,6 +126,16 @@ base_system_installation()
     fi
 }
 
+remove_drive()
+{
+    echo "##################################################################"
+    echo "Removing drive $config_target_disk"
+    echo "##################################################################"
+
+    sync
+    echo "1" > "/sys/block/$config_target_disk/device/delete"
+}
+
 ####################
 # Main entry point #
 ####################
@@ -155,6 +165,7 @@ configuration_confirmation
 select_target_disk
 prepare_disk
 base_system_installation
+remove_drive
 
 echo "##### Done #####"
 echo "Remove the disk from your host, attach it to your target system and boot it."
