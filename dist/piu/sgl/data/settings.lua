@@ -40,8 +40,10 @@ return {
     },
 
     sound = {
+        driver = "",
+        device = "",
         master_volume = 1.0,
-        sfx_volume = 1.0
+        sfx_volume = 1.0,
     },
 
     system = {
