@@ -36,6 +36,11 @@ deploy_sgl()
     unzip "$target_pumpos_piu_sgl_dir/$(basename "$sgl_zip_path")" -d "$target_pumpos_piu_sgl_dir" > /dev/null
     rm "$target_pumpos_piu_sgl_dir/$(basename "$sgl_zip_path")"
 
+    # Fix permissions
+    chmod +x "$target_pumpos_piu_sgl_dir/sgl.sh"
+    chmod +x "$target_pumpos_piu_sgl_dir/sgl-trap.sh"
+    chmod +x "$target_pumpos_piu_sgl_dir/sgl-startx.sh"
+
     log_debug "  Updating sgl assets..."
 
     cp -r "$sgldata_data_asset_dir"/* "$target_pumpos_piu_sgl_dir/data"
