@@ -85,7 +85,7 @@ verify_boot_cfg_values()
         exit 1
     fi
 
-    if [ ! "$boot_cfg_mode" == "game" ] && [ ! "$boot_cfg_mode_game_selected" ]; then
+    if [ "$boot_cfg_mode" = "game" ] && [ ! "$boot_cfg_mode_game_selected" ]; then
         echo "Error: boot.cfg in mode game does not specify game to boot."
         exit 1
     fi
