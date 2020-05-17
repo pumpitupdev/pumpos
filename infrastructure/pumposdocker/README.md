@@ -3,7 +3,7 @@
 ### Nvidia
 
 ### Prereqs
-Install the Nvidia propeirty drivers for your host machine
+Install the Nvidia proprietary drivers for your host machine
 Install the Nvidia container toolkit:
   Ubuntu/Centos: follow the instuctions on https://github.com/NVIDIA/nvidia-docker
   Arch: install https://aur.archlinux.org/packages/nvidia-container-toolkit/ from the AUR
