@@ -1,0 +1,30 @@
+FROM nvidia/opengl:1.0-glvnd-runtime-ubuntu18.04
+
+#Installs dependencies.
+RUN export DEBIAN_FRONTEND=noninteractive && apt-get update && apt-get install -y \
+        libglu1-mesa:i386 \
+        libusb-0.1-4:i386 \
+        libasound2:i386
+
+
+#Copy and run modified pumpos setup script
+COPY /setup.sh /setup.sh
+RUN chmod 755 /setup.sh
+RUN /setup.sh
+
+
+#Install nvidia drivers
+RUN apt-get update && apt-get install -y binutils kmod
+ADD NVIDIA-DRIVER.run /tmp/NVIDIA-DRIVER.run
+RUN sh /tmp/NVIDIA-DRIVER.run -a -N --ui=none --no-kernel-module
+RUN rm /tmp/NVIDIA-DRIVER.run
+
+#Copy run script
+COPY run.sh /run.sh
+RUN chmod 755 /run.sh
+
+#Set working directory
+WORKDIR /piu
+
+#Set entrypoint
+ENTRYPOINT ["/run.sh"]

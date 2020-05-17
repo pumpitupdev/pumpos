@@ -1,0 +1,19 @@
+FROM ubuntu:18.04
+
+#Copy and run modified pumpos setup script
+COPY /setup.sh /setup.sh
+RUN chmod 755 /setup.sh
+RUN /setup.sh
+
+#Install mesa deps
+RUN apt-get install -y libglu1-mesa:i386 mesa-utils mesa-utils-extra
+
+#Copy run script
+COPY run.sh /run.sh
+RUN chmod 755 /run.sh
+
+#Set working directory
+WORKDIR /piu
+
+#Set entrypoint
+ENTRYPOINT ["/run.sh"]
