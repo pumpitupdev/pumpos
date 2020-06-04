@@ -21,9 +21,9 @@ environment_check()
 set_locale()
 {
     echo ""
-	  echo "##### Setting locale... #####"
+    echo "##### Setting locale... #####"
 
-	  locale-gen en_US.UTF-8
+    locale-gen en_US.UTF-8
 }
 
 set_apt_repos()
@@ -128,21 +128,22 @@ create_user()
     echo ""
     echo "##### Creating user... #####"
 
-    useradd "$user"
+    # Create user and home directory
+    useradd -m "$user"
     # Pass needs to be sent twice
     (echo "$password"; echo "$password") | passwd "$user"
-    mkdir "/home/$user"
-    chown "$user:$user" "/home/$user"
-    chmod 755 "/home/$user"
+
+    # Change shell to bash
+    usermod --shell /bin/bash "$user"
 }
 
 setup_piu_boot_env()
 {
     echo ""
-	  echo "##### Setup piu boot environment... #####"
+    echo "##### Setup piu boot environment... #####"
 
-	  # Create startup service for boot.sh to run on tty1
-	  printf "%s" "
+    # Create startup service for boot.sh to run on tty1
+    printf "%s" "
 [Unit]
 Description=PIU Boot
 After=getty.target

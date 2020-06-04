@@ -110,7 +110,8 @@ install_dev_tools()
 
     # nano because I am not going to torture myself using vi
     apt-get -y install \
-    nano \
+        vim \
+        nano \
 	gdb \
 	gdbserver\
 	strace
@@ -119,16 +120,19 @@ install_dev_tools()
 install_deps_pumptools()
 {
     echo ""
-	echo "##### Install deps pumptools... #####"
+    echo "##### Install deps pumptools... #####"
 
     apt-get -y install \
     libusb-1.0-0:i386
+    libxtst6:i386 \
+    libstdc++5:i386 \
+    libcurl4-gnutls-dev:i386
 }
 
 install_deps_sgl()
 {
     echo ""
-	echo "##### Install deps sgl... #####"
+    echo "##### Install deps sgl... #####"
 
     apt-get -y install \
 	libsdl2-2.0-0 \
@@ -140,7 +144,7 @@ install_deps_sgl()
 install_deps_mk3_ports()
 {
     echo ""
-	echo "##### Install deps mk3 ports... #####"
+    echo "##### Install deps mk3 ports... #####"
 
     apt-get -y install \
     gcc-multilib \
