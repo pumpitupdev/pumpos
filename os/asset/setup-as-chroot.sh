@@ -135,6 +135,7 @@ create_user()
 
     # Change shell to bash
     usermod --shell /bin/bash "$user"
+    usermod -aG sudo "$user"
 }
 
 setup_piu_boot_env()
