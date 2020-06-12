@@ -47,3 +47,4 @@ WORKDIR /piu
 
 #Set entrypoint
 #ENTRYPOINT ["./piueb", "run"]
+#ENTRYPOINT ["glxgears"]

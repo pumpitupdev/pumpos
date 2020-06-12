@@ -12,8 +12,10 @@ docker run \
     -v /dev/bus/usb:/dev/bus/usb \
     --device /dev/dri \
     --device /dev/vga_arbiter \
+    --net=host \
     -it \
     --rm \
+    -v "$HOME/.Xauthority:/root/.Xauthority:rw" \
     -v /tmp/.X11-unix:/tmp/.X11-unix \
     -v "$1":/piu \
     -e DISPLAY="$DISPLAY" \
