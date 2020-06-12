@@ -1,4 +1,6 @@
 # Release history
+## 1.05
+
 ## 1.04
 * Add support for NX2 deployment
 * Add support for SGL deployment
