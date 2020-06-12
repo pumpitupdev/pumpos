@@ -6,6 +6,8 @@ IPV4_ADDR := $(shell ip route get 8.8.8.8 | grep src | sed 's/.*src \(.*\) uid.*
 DOCKER_APT_CACHE_CONTAINER_NAME := "pumpos-apt-cache"
 DOCKER_APT_CACHE_IMAGE_NAME := "pumpos:apt-cache"
 DOCKER_APT_CACHE_INSTANCE_NAME := "pumpos-apt-cache-instance"
+DOCKER_PIU_MESA_CONTAINER_NAME := "pumpos-piu-mesa"
+DOCKER_PIU_MESA_IMAGE_NAME := "pumpos:piu-mesa"
 
 all: \
 usage
@@ -40,3 +42,8 @@ stop-apt-cache:
 
 logs-apt-cache:
 	$(V)docker logs -f $(DOCKER_APT_CACHE_INSTANCE_NAME)
+
+build-piu-mesa:
+	$(V)docker rm -f $(DOCKER_PIU_MESA_CONTAINER_NAME) 2> /dev/null || true
+	$(V)docker build -t $(DOCKER_PIU_MESA_IMAGE_NAME) -f piu-mesa/Dockerfile .
+	$(V)docker create --name $(DOCKER_PIU_MESA_CONTAINER_NAME) $(DOCKER_PIU_MESA_IMAGE_NAME)
