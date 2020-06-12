@@ -29,7 +29,13 @@ GAME_VER_PT_HOOK_MAP=(
     ["16_exc2"]="x2hook"
     ["17_zero"]="zerohook"
     ["18_nx"]="nxhook"
-    ["20_nx2"]="nx2hook")
+    ["19_pro"]="prohook"
+    ["20_nx2"]="nx2hook"
+    ["21_nxa"]="nxahook"
+    ["22_pro2"]="pro2hook"
+    ["24_fex"]="fexhook"
+    ["26_f2"]="f2hook"
+    ["27_prime"]="prihook")
 
 deploy_pumptools_game()
 {
