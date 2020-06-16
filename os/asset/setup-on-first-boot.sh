@@ -123,7 +123,7 @@ install_deps_pumptools()
     echo "##### Install deps pumptools... #####"
 
     apt-get -y install \
-    libusb-1.0-0:i386
+    libusb-1.0-0:i386 \
     libxtst6:i386 \
     libstdc++5:i386 \
     libcurl4-gnutls-dev:i386
