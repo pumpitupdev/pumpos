@@ -93,7 +93,9 @@ data_deploy()
 
         changelog_append "$target_pumpos_piu_dir/log" "deploy-data" "start all"
 
-        for game_ver in $target_pumpos_piu_dir/data; do
+        for game_path in "$target_pumpos_piu_dir"/data/*; do
+            game_ver="$(basename "$game_path")"
+
             data_deploy_game "$target_pumpos_piu_dir" "$piu_data_dir" "$lib_type" "$game_ver"
         done
     else
@@ -111,7 +113,7 @@ data_deploy()
 # Main entry point #
 ####################
 
-if [ "$#" -lt 4 ]; then
+if [ "$#" -lt 3 ]; then
     echo "Pump It Up OS Deploy Game Data"
     echo "Deploy game data to a prepared base directory."
     echo "Usage: deploy-data <path to /piu folder of mounted pumpos drive> <data dir> <lib type: ld, local> [single deployment, e.g. 01_1st]"
