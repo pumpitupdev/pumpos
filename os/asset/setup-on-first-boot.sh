@@ -173,6 +173,15 @@ install_deps_exc()
     libasound2:i386
 }
 
+install_deps_nx2()
+{
+    echo ""
+    echo "##### Install deps nx2... #####"
+
+    apt-get -y install \
+    libfreetype6:i386
+}
+
 ####################
 # Main entry point #
 ####################
@@ -207,6 +216,7 @@ install_deps_pumptools
 install_deps_sgl
 install_deps_mk3_ports
 install_deps_exc
+install_deps_nx2
 
 chmod +x /piu/boot.sh
 
