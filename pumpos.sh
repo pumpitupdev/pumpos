@@ -47,6 +47,9 @@ case "$1" in
     backup-save)
         "$ROOT_PATH/deploy/backup-save.sh" "${@:2}"
         ;;
+    deploy-save)
+        "$ROOT_PATH/deploy/save.sh" "${@:2}"
+        ;;
     *)
         echo "Pump It Up OS (pumpos) build script, available options:"
         echo "  os-config: Create a configuration for installing pumpos to a physical disk."
@@ -60,5 +63,6 @@ case "$1" in
         echo "  conf-pumptools: Configure the hooks of the pumptools deployment of one or multiple games."
         echo "  conf-boot: Configure what pumpos is supposed to do/run on boot."
         echo "  backup-save: Backup all save directories on a target /piu deployment."
+        echo "  deploy-save: Deploy all backed up save directories to a target /piu deployment."
         exit 1
 esac
