@@ -103,6 +103,9 @@ host machine.
 1. Ensure you have the root folder of the disk mounted somewhere. Examples of
 further steps assume you have it mounted on `/mnt/pumpos`. Change the path
 if necessary.
+1. If you want to use pumpnet, put the certificate files you have received
+into the `dist/shared/certs` folder without adding further sub-folders. The
+certs will be deployed on the `deploy-base` command.
 1. Deploy the base directory structure by running the `deploy-base` command,
 e.g. `./pumpos.sh deploy-base /mnt/pumpos/piu`.
 1. Deploy game data to the disk by using the `deploy-data` command. You can
@@ -138,6 +141,10 @@ games are bootstrapped:
     `./pumpos.sh conf-boot /mnt/pumpos/piu game 01_1st`
     1. SGL bootstrapping (requires SGL deployed): 
     `./pumpos.sh conf-boot /mnt/pumpos/piu sgl`
+1. If you want to use pumpnet, modify the `conf/pumptools-network.conf` file
+by setting your machine ID and the pumpnet URL. Do another `conf-pumptools`
+command to apply the changes to the games in the list:
+`./pumpos.sh conf-pumptools /mnt/pumpos/piu ./conf/pumptools-network.conf`
 1. Unmount: `umount /mnt/pumpos/piu` 
 1. Disconnect the disk attached to your host.
 1. Connect the disk back to your target hardware.
