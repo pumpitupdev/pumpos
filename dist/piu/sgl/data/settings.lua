@@ -12,15 +12,19 @@ return {
 
         modules = {
             "libio-piumk6",
+            "libio-piubtn",
         },
 
         isp_scripts = {
             "io/piumk6/isp-attract.lua",
             "io/piumk6/isp-operator.lua",
+            "io/piubtn/isp-attract.lua",
+            "io/piubtn/isp-operator.lua",
         },
 
         osp_scripts = {
             "io/piumk6/osp-attract.lua",
+            "io/piubtn/osp-attract.lua",
         },
     },
 
