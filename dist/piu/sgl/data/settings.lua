@@ -1,4 +1,5 @@
--- Settings file for dedicated cabinet setup with PIUIO (MK6 IO)
+-- Settings file for dedicated cabinet setup with PIUIO (MK6 IO) and PIUBTN ("Piu Pro" button board)
+-- SGL will start even if both IO devices are not present
 return {
     gfx = {
         fullscreen = true,
