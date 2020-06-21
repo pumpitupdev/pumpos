@@ -48,7 +48,7 @@ deploy_pumptools_game()
 
     log_debug "  Deploying pumptools for $game_ver, target dir $target_pumpos_piu_dir..."
 
-    if [ ! "${GAME_VER_PT_HOOK_MAP[$game_ver]}" ]; then
+    if [ ! "$hook_name" ]; then
         log_warn "No game version to hook mapping for $game_ver available, skipping"
         return
     fi
