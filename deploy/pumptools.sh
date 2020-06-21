@@ -36,7 +36,7 @@ GAME_VER_PT_HOOK_MAP=(
     ["23_fst"]="fsthook"
     ["24_fex"]="fexhook"
     ["26_f2"]="f2hook"
-    ["27_prime"]="prihook")
+    ["27_pri"]="prihook")
 
 deploy_pumptools_game()
 {
