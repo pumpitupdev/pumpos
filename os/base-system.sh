@@ -26,8 +26,16 @@ install_base_system()
     echo ""
     echo "##### Installing base system... #####"
 
+    local mirror=""
+
+    if [[ "$config_apt_host" ]] && [[ "$config_apt_mirror" ]]; then
+        mirror="$config_apt_host/$config_apt_mirror"
+
+        echo "Using mirror $mirror for apt packages"
+    fi
+
     # Install base system, Ubuntu 18.xx LTS
-    debootstrap --arch amd64 bionic "$MOUNT_POINT_PUMPOS" "$config_apt_host/$config_apt_mirror"
+    debootstrap --arch amd64 bionic "$MOUNT_POINT_PUMPOS" "$mirror"
 }
 
 generate_fstab()
