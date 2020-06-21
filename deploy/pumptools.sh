@@ -59,6 +59,11 @@ deploy_pumptools_game()
 
     local hook_file="$hook_path/$hook_name.so"
 
+    if [ ! -e "$hook_file" ]; then
+        log_warn "Missing hook $hook_name for game $game_ver, skipping"
+        return
+    fi
+
     verify_file_exists "$hook_path"
     verify_file_exists "$hook_file"
 
