@@ -216,6 +216,33 @@ http://<some ip v4 address>:3142
 eu.archive.ubuntu.com/ubuntu/
 ```
 
+## Complete flow for a full deployment for cabinet use with SGL
+The following commands are to be run in order if you already know what you are doing. If you have no clue what these
+commands are about, you are advised to carefully read the instructions of
+[this section](#creating-a-physical-disk-image-deploying-data-and-configuration) first.
+
+Preparations:
+1. Connect external drive or prepare local folder
+1. Either mount your drive on `/mnt/pumpos/piu` or replace it if required.
+1. Have `pumpdata` prepared and located next to `pumpos`
+1. Have `pumptools` repo or dist package prepared and located next to `pumpos`
+1. Have `sgl` repo or dist package prepared and located next to `pumpos`
+1. Have `sgldata` repo or dist package prepared and localted next to `pumpos`
+
+Steps:
+1. Skip the following OS install process if deployment to local folder.
+    1. `./pumpos.sh os-config pumpos.conf`
+    1. `./pumpos.sh os-install ./pumpos.conf`
+    1. Finish OS install process on target hardware
+    1. Plug disk back into workstation
+1. `./pumpos.sh deploy-base /mnt/pumpos/piu`
+1. `./pumpos.sh deploy-data /mnt/pumpos/piu ../pumpdata/data local`
+1. `./pumpos.sh deploy-sgl /mnt/pumpos/piu ../sgl/build/docker/package/sgl-linux.zip ../sgldata/data/piu`
+1. `./pumpos.sh deploy-pumptools /mnt/pumpos/piu ../pumptools/build/docker/pumptools.zip`
+1. `./pumpos.sh conf-pumptools /mnt/pumpos/piu ./conf/pumptools-cabinet.conf`
+1. `./pumpos.sh conf-boot /mnt/pumpos/piu sgl`
+1. If you have a save backup of some old deployment to restore: `./pumpos.sh deploy-save /mnt/pumpos/piu`
+
 ## License
 Source code license is the Unlicense; you are permitted to do with this as thou
 wilt. For details, please refer to the [LICENSE file](LICENSE) included with the
