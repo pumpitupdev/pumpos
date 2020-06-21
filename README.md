@@ -169,6 +169,25 @@ machine.
 1. Boot the target hardware and it should start SGL which allows you to select
 the game that you want to play.
 
+### Backup save folders before full re-deployment
+If you want to fully re-deploy to your existing disk which includes a fresh installation of the base OS, you can let
+the pumpos scripts backup your save folders which includes operator settings, local high scores and more.
+
+Make sure your drive is connected and mounted on your local machine.
+
+```shell script
+./pumpos.sh backup-save /mnt/pumpos/piu
+```
+
+Running the above command creates zip files of all save folders and backs them up to the folder `backup/save` of the
+local pumpos project.
+
+You can restore the backup once you have re-deployed everything with the following command:
+
+```shell script
+./pumpos.sh deploy-save /mnt/pumpos/piu
+```
+
 ### Enable caching layer for apt packages
 If you have to install pumpos multiple times, e.g. developing, testing or debugging, it is highly recommended
 to start the `apt-cache` docker container provided with pumpos. This container runs locally on your host
