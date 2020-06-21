@@ -228,6 +228,8 @@ Preparations:
 1. Have `pumptools` repo or dist package prepared and located next to `pumpos`
 1. Have `sgl` repo or dist package prepared and located next to `pumpos`
 1. Have `sgldata` repo or dist package prepared and localted next to `pumpos`
+1. Optional: Update the entries in `conf/pumptools-network.conf` with your pumpnet credentials and copy the certificate
+files from pumpnet to the `dist/shared/certs` folder, no further sub-folders!
 
 Steps:
 1. Skip the following OS install process if deployment to local folder.
@@ -242,6 +244,7 @@ Steps:
 1. `./pumpos.sh conf-pumptools /mnt/pumpos/piu ./conf/pumptools-cabinet.conf`
 1. `./pumpos.sh conf-boot /mnt/pumpos/piu sgl`
 1. If you have a save backup of some old deployment to restore: `./pumpos.sh deploy-save /mnt/pumpos/piu`
+1. If you want to enable pumpnet on all configured games: `./pumpos.sh conf-pumptools /mnt/pumpos/piu ./conf/pumptools-network.conf`
 
 ## License
 Source code license is the Unlicense; you are permitted to do with this as thou
