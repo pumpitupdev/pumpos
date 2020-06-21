@@ -33,6 +33,7 @@ GAME_VER_PT_HOOK_MAP=(
     ["20_nx2"]="nx2hook"
     ["21_nxa"]="nxahook"
     ["22_pro2"]="pro2hook"
+    ["23_fst"]="fsthook"
     ["24_fex"]="fexhook"
     ["26_f2"]="f2hook"
     ["27_prime"]="prihook")
