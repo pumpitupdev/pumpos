@@ -126,7 +126,8 @@ install_deps_pumptools()
     libusb-1.0-0:i386 \
     libxtst6:i386 \
     libstdc++5:i386 \
-    libcurl4:i386
+    libcurl4:i386 \
+    libcurl3-gnutls:i386
 }
 
 install_deps_sgl()
