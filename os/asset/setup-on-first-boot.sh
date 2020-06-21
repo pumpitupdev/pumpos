@@ -182,6 +182,14 @@ install_deps_nx2()
     libfreetype6:i386
 }
 
+remove_apt_get_proxy()
+{
+    echo ""
+    echo "##### Removing apt get proxy (package caching)... #####"
+
+    rm /etc/apt/apt.conf.d/01proxy
+}
+
 ####################
 # Main entry point #
 ####################
@@ -217,6 +225,7 @@ install_deps_sgl
 install_deps_mk3_ports
 install_deps_exc
 install_deps_nx2
+remove_apt_get_proxy
 
 chmod +x /piu/boot.sh
 
