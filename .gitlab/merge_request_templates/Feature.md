@@ -18,5 +18,7 @@
 ## Checklist
 <!-- Make sure you covered all items, which apply, of the checklist below. -->
 <!-- Strikethrough items that do not apply and provide a brief description why. -->
+* [ ] My changes follow the existing code style/style guide.
+* [ ] I have tested my changes and made sure they work.
 * [ ] Updated existing doc of or add new doc to README file(s).
 * [ ] Updated development documentation.
