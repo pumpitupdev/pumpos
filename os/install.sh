@@ -51,23 +51,19 @@ read_configuration()
 
     local config_file="$1"
 
-    config_hostname="$(cat "$config_file" | cut -d$'\n' -f 1)"
-    config_username="$(cat "$config_file" | cut -d$'\n' -f 2)"
-    config_password="$(cat "$config_file" | cut -d$'\n' -f 3)"
-    config_gpu_driver="$(cat "$config_file" | cut -d$'\n' -f 4)"
-    config_apt_host="$(cat "$config_file" | cut -d$'\n' -f 5)"
-    config_apt_mirror="$(cat "$config_file" | cut -d$'\n' -f 6)"
+    # Read configuration with bash variables
+    source "$config_file"
 }
 
 configuration_confirmation()
 {
     echo "Summary configuration:"
-    echo "hostname: $config_hostname"
-    echo "username: $config_username"
+    echo "hostname: $PUMPOS_CONFIG_HOSTNAME"
+    echo "username: $PUMPOS_CONFIG_USERNAME"
     echo "password: ***HIDDEN***"
-    echo "gpu driver: $config_gpu_driver"
-    echo "apt host (optional): $config_apt_host"
-    echo "apt mirror (optional): $config_apt_mirror"
+    echo "gpu driver: $PUMPOS_CONFIG_GPU_DRIVER"
+    echo "apt host (optional): $PUMPOS_CONFIG_APT_HOST"
+    echo "apt mirror (optional): $PUMPOS_CONFIG_APT_MIRROR"
 
     echo "Are these values correct? Confirm by typing yes in caps and confirm."
 
@@ -123,7 +119,7 @@ base_system_installation()
     echo "Base system installation"
     echo "##################################################################"
 
-    "$BASE_SYTEM_SCRIPT_PATH" "$config_target_disk" "$config_hostname" "$config_username" "$config_password" "$config_apt_host" "$config_apt_mirror"
+    "$BASE_SYTEM_SCRIPT_PATH" "$config_target_disk" "$PUMPOS_CONFIG_HOSTNAME" "$PUMPOS_CONFIG_USERNAME" "$PUMPOS_CONFIG_PASSWORD" "$PUMPOS_CONFIG_APT_HOST" "$PUMPOS_CONFIG_APT_MIRROR"
 
     if [ "$?" != "0" ]; then
         exit 1
@@ -175,6 +171,6 @@ echo "##### Done #####"
 echo "Remove the disk from your host, attach it to your target system and boot it."
 echo "Ensure that your target system is wired to your local network."
 echo "Post installation steps are executed on initial boot, once, to finish installation."
-echo "Once post installation completes and the machines rebooted, you can access it remotely: ssh ${config_username}@$config_hostname"
+echo "Once post installation completes and the machines rebooted, you can access it remotely: ssh ${PUMPOS_CONFIG_USERNAME}@$PUMPOS_CONFIG_HOSTNAME"
 
 exit 0

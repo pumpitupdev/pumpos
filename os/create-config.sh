@@ -98,12 +98,12 @@ write_to_config_file()
     local out_file="$1"
 
     {
-        echo "$config_hostname"
-        echo "$config_username"
-        echo "$config_password"
-        echo "$config_gpu_driver"
-        echo "$config_apt_host"
-        echo "$config_apt_mirror"
+        echo "PUMPOS_CONFIG_HOSTNAME=$config_hostname"
+        echo "PUMPOS_CONFIG_USERNAME=$config_username"
+        echo "PUMPOS_CONFIG_PASSWORD=$config_password"
+        echo "PUMPOS_CONFIG_GPU_DRIVER=$config_gpu_driver"
+        echo "PUMPOS_CONFIG_APT_HOST=$config_apt_host"
+        echo "PUMPOS_CONFIG_APT_MIRROR=$config_apt_mirror"
     } > "$out_file"
 
     echo "Config written to file $out_file"
