@@ -48,7 +48,8 @@ apt_upgrade()
     echo ""
     echo "##### Apt upgrade... #####"
 
-    apt-get -y upgrade
+    # Force to non-interactive to avoid dialogs popping up
+    DEBIAN_FRONTEND=noninteractive apt-get -yq upgrade
 }
 
 install_kernel()
@@ -138,6 +139,169 @@ create_user()
     usermod -aG sudo "$user"
 }
 
+set_timezone()
+{
+    echo ""
+	echo "##### Setting timezone... #####"
+
+	ln -sf /usr/share/zoneinfo/UTC /etc/localtime
+	hwclock --systohc
+}
+
+enable_multiarch()
+{
+    echo ""
+	echo "##### Enable multiarch packages... #####"
+
+    dpkg --add-architecture i386
+    apt update
+}
+
+install_ssh()
+{
+    echo ""
+	echo "##### Install sshd... #####"
+
+    apt-get -y install openssh-server
+
+    # Service automatically enabled
+
+	# Enable password auth
+	echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config
+
+	systemctl restart sshd
+}
+
+install_gpu_driver()
+{
+    echo ""
+	echo "##### Install gpu driver... #####"
+
+    # Required for add-apt-repository
+    apt-get -y install software-properties-common
+
+    # Add official Nvidia PPA
+    add-apt-repository -y ppa:graphics-drivers/ppa
+
+    apt-get update
+
+    # TODO read this from config, nvidia-304, nvidia-340 or nvidia-384 allowed for nvidia driver
+    apt-get -y install \
+    nvidia-340 \
+    libglu1-mesa:i386
+}
+
+install_alsa()
+{
+    echo ""
+	echo "##### Install alsa... #####"
+
+	apt-get -y install \
+	alsa-base \
+	alsa-utils \
+	alsa-tools
+}
+
+install_x11()
+{
+    echo ""
+	echo "##### Install X11... #####"
+
+	apt-get -y install \
+	xorg \
+	xinit \
+	x11-xserver-utils \
+	xserver-xorg-core
+}
+
+install_dev_tools()
+{
+    echo ""
+    echo "##### Install dev tools... #####"
+
+    # nano because I am not going to torture myself using vi
+    apt-get -y install \
+        vim \
+        nano \
+	gdb \
+	gdbserver\
+	strace
+}
+
+install_deps_pumptools()
+{
+    echo ""
+    echo "##### Install deps pumptools... #####"
+
+    apt-get -y install \
+    libusb-1.0-0:i386 \
+    libxtst6:i386 \
+    libstdc++5:i386 \
+    libcurl4:i386 \
+    libcurl3-gnutls:i386
+}
+
+install_deps_sgl()
+{
+    echo ""
+    echo "##### Install deps sgl... #####"
+
+    apt-get -y install \
+	libsdl2-2.0-0 \
+	libsdl2-image-2.0-0 \
+	libsdl2-ttf-2.0-0 \
+	ffmpeg
+}
+
+install_deps_mk3_ports()
+{
+    echo ""
+    echo "##### Install deps mk3 ports... #####"
+
+    apt-get -y install \
+    gcc-multilib \
+    libusb-0.1-4:i386 \
+    libconfig++9v5:i386 \
+    lib32tinfo5 \
+    lib32ncurses5 \
+    libxcursor1:i386 \
+    libxinerama1:i386 \
+    libxi6:i386 \
+    libxrandr2:i386 \
+    libxxf86vm1:i386 \
+    libx11-6:i386 \
+    libasound2:i386
+}
+
+install_deps_exc()
+{
+    echo ""
+    echo "##### Install deps exc... #####"
+
+    apt-get -y install \
+    gcc-multilib \
+    libx11-6:i386 \
+    zlib1g:i386 \
+    libasound2:i386
+}
+
+install_deps_nx2()
+{
+    echo ""
+    echo "##### Install deps nx2... #####"
+
+    apt-get -y install \
+    libfreetype6:i386
+}
+
+remove_apt_get_proxy()
+{
+    echo ""
+    echo "##### Removing apt get proxy (package caching)... #####"
+
+    rm /etc/apt/apt.conf.d/01proxy
+}
+
 setup_pumpos_boot_env()
 {
     echo ""
@@ -165,6 +329,24 @@ StandardError=inherit
 
     chmod +x /etc/systemd/system/pumpos.service
     systemctl enable pumpos.service
+}
+
+setup_pumpos_boot_default_script()
+{
+    printf '%s' '#!/bin/bash
+clear
+echo "========================================="
+echo "======= Empty pumpos installation ======="
+echo "========================================="
+echo "Error booting, no data deployed."
+exit 0' > /pumpos/boot.sh
+
+    chmod +x /pumpos/boot.sh
+
+    # Typically, you will have a user with user/group id 1000 on your host machine
+    # To make this file accessible by the (piu) user on the remote machine and
+    # potentially on your host, change ownership
+    chown 1000:1000 /pumpos/boot.sh
 }
 
 ####################
@@ -195,6 +377,24 @@ install_network_stuff
 set_hostname "$config_hostname"
 set_root_password "$config_password"
 create_user "$config_username" "$config_password"
+set_timezone
+
+# Packages
+enable_multiarch
+install_ssh
+install_gpu_driver
+install_alsa
+install_x11
+install_dev_tools
+install_deps_pumptools
+install_deps_sgl
+install_deps_mk3_ports
+install_deps_exc
+install_deps_nx2
+remove_apt_get_proxy
+
+# Bootstrapping for pumpos
+setup_pumpos_boot_default_script
 setup_pumpos_boot_env
 
 echo "##### Done in chroot environment #####"

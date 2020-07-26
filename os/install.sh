@@ -3,7 +3,7 @@
 # Root path of this script
 readonly ROOT_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 readonly PREPARE_HDD_SCRIPT_PATH="$ROOT_PATH/prepare-hdd.sh"
-readonly BASE_SYTEM_SCRIPT_PATH="$ROOT_PATH/base-system.sh"
+readonly SYTEM_INSTALL_SCRIPT_PATH="$ROOT_PATH/system-install.sh"
 
 check_command_available()
 {
@@ -116,13 +116,13 @@ prepare_disk()
     fi
 }
 
-base_system_installation()
+system_installation()
 {
     echo "##################################################################"
-    echo "Base system installation"
+    echo "System installation"
     echo "##################################################################"
 
-    "$BASE_SYTEM_SCRIPT_PATH" "$config_target_disk" "$PUMPOS_CONFIG_HOSTNAME" "$PUMPOS_CONFIG_USERNAME" "$PUMPOS_CONFIG_PASSWORD" "$PUMPOS_CONFIG_APT_HOST" "$PUMPOS_CONFIG_APT_MIRROR"
+    "$SYTEM_INSTALL_SCRIPT_PATH" "$config_target_disk" "$PUMPOS_CONFIG_HOSTNAME" "$PUMPOS_CONFIG_USERNAME" "$PUMPOS_CONFIG_PASSWORD" "$PUMPOS_CONFIG_APT_HOST" "$PUMPOS_CONFIG_APT_MIRROR"
 
     if [ "$?" != "0" ]; then
         exit 1
@@ -145,8 +145,9 @@ remove_drive()
 
 if [ ! "$1" ]; then
 	  echo "Pump OS Installer"
-	  echo "Creates a drive/partition layout on the target drive and installs a base Linux system for use with Pump games."
-	  echo "PREPARATIONS BEFORE YOU CONTINUE:"
+	  echo "Creates a drive/partition layout on the target drive and installs a Linux system for use with Pump games."
+	  echo ""
+      echo "PREPARATIONS BEFORE YOU CONTINUE:"
 	  echo " 1. Get an empty or unused HDD/SSD large enough to fit whatever games you want to put on it."
 	  echo " 2. Connect the disk to the machine you are running this script on."
 	  echo " 3. Check that your disk is recognized by the system, e.g. lsblk"
@@ -167,13 +168,16 @@ read_configuration "$config_file"
 configuration_confirmation
 select_target_disk
 prepare_disk
-base_system_installation
+system_installation
 remove_drive
 
+echo "################"
 echo "##### Done #####"
-echo "Remove the disk from your host, attach it to your target system and boot it."
-echo "Ensure that your target system is wired to your local network."
-echo "Post installation steps are executed on initial boot, once, to finish installation."
-echo "Once post installation completes and the machines rebooted, you can access it remotely: ssh ${PUMPOS_CONFIG_USERNAME}@$PUMPOS_CONFIG_HOSTNAME"
+echo "################"
+echo ""
+echo "1. Disk unmouned, remove it from your host"
+echo "2. Attach it to your target system"
+echo "3. Boot and check if everything's good. You should see some output indicating that it's an empty installation"
+echo "4. Continue with software and data deployment"
 
 exit 0

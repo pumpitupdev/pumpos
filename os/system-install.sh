@@ -6,9 +6,7 @@ readonly MOUNT_POINT_PUMPOS="/tmp/pumpos"
 readonly PUMPOS_DATA="/pumpos"
 readonly MOUNT_POINT_PUMPOS_DATA="$MOUNT_POINT_PUMPOS$PUMPOS_DATA"
 readonly CHROOT_SETUP_SCRIPT="setup-as-chroot.sh"
-readonly BOOT_SETUP_SCRIPT="setup-on-first-boot.sh"
-readonly CHROOT_SETUP_SCRIPT_PATH="$ROOT_PATH/asset/$CHROOT_SETUP_SCRIPT"
-readonly BOOT_SETUP_SCRIPT_PATH="$ROOT_PATH/asset/$BOOT_SETUP_SCRIPT"
+readonly CHROOT_SETUP_SCRIPT_PATH="$ROOT_PATH/$CHROOT_SETUP_SCRIPT"
 readonly CHROOT_EXEC_SCRIPT_PATH="$ROOT_PATH/chroot.sh"
 
 mount_partition()
@@ -80,19 +78,6 @@ chroot_exec_install()
     $CHROOT_EXEC_SCRIPT_PATH "$MOUNT_POINT_PUMPOS" "$PUMPOS_DATA/$CHROOT_SETUP_SCRIPT" "$config_hostname" "$config_username" "$config_password"
 }
 
-prepare_boot_post_install()
-{
-    echo ""
-    echo "##### Prepare boot post install... #####"
-
-    # Copy initial boot script which executes further post installation on first boot
-    cp "$BOOT_SETUP_SCRIPT_PATH" "$MOUNT_POINT_PUMPOS_DATA/boot.sh"
-    chmod +x "$MOUNT_POINT_PUMPOS_DATA/boot.sh"
-
-    # Cleanup after post install
-    rm "$MOUNT_POINT_PUMPOS_DATA/$CHROOT_SETUP_SCRIPT"
-}
-
 unmount_partition()
 {
     echo ""
@@ -126,7 +111,6 @@ generate_fstab
 add_apt_mirror
 setup_pumpos
 chroot_exec_install
-prepare_boot_post_install
 unmount_partition
 
 echo ""
