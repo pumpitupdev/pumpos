@@ -65,7 +65,9 @@ configuration_confirmation()
     echo "apt host (optional): $PUMPOS_CONFIG_APT_HOST"
     echo "apt mirror (optional): $PUMPOS_CONFIG_APT_MIRROR"
 
-    echo "Are these values correct? Confirm by typing yes in caps and confirm."
+    echo ""
+    echo "Are these values correct?"
+    echo "Confirm by typing yes in caps and confirm."
 
     echo -n "> "
     read -r confirm
@@ -83,7 +85,8 @@ select_target_disk()
         lsblk
         echo ""
 
-        echo "Please select the target disk to install pumpos on, e.g. sdd. Leave empty to abort."
+        echo "Please select the target disk to install pumpos on, e.g. sdd."
+        echo "Leave empty to abort."
 
         echo -n "> "
         read -r config_target_disk
