@@ -145,7 +145,7 @@ remove_drive()
 ####################
 
 if [ ! "$1" ]; then
-	  echo "Pump It Up OS Installer"
+	  echo "Pump OS Installer"
 	  echo "Creates a drive/partition layout on the target drive and installs a base Linux system for use with Pump games."
 	  echo "PREPARATIONS BEFORE YOU CONTINUE:"
 	  echo " 1. Get an empty or unused HDD/SSD large enough to fit whatever games you want to put on it."

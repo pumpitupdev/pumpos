@@ -13,12 +13,12 @@ hostname()
 
 username()
 {
-    echo "Please enter a username (leave empty for 'piu' default):"
+    echo "Please enter a username (leave empty for 'pumpos' default):"
     echo -n "> "
     read -r config_username
 
     if [ ! "$config_username" ]; then
-        config_username="piu"
+        config_username="pumpos"
     fi
 }
 
@@ -114,7 +114,7 @@ write_to_config_file()
 ####################
 
 if [ ! "$1" ]; then
-    echo "Pump It Up OS Configuration Creator"
+    echo "Pump OS Configuration Creator"
     echo "Usage: os-config <path to output file to save config to>"
     exit 1
 fi

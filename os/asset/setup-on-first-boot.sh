@@ -210,9 +210,9 @@ sleep 10
 apply_network_config
 check_internet_access
 
-# Disable the piu script as some installation steps trigger a restart of this
+# Disable the pumpos boot script as some installation steps trigger a restart of this
 # for unknown reasons which crashes the installtion process
-systemctl disable piu
+systemctl disable pumpos
 
 set_timezone
 enable_multiarch
@@ -228,15 +228,15 @@ install_deps_exc
 install_deps_nx2
 remove_apt_get_proxy
 
-chmod +x /piu/boot.sh
+chmod +x /pumpos/boot.sh
 
 # Typically, you will have a user with user/group id 1000 on your host machine
 # To make this file accessible by the (piu) user on the remote machine and
 # potentially on your host, change ownership
-chown 1000:1000 /piu/boot.sh
+chown 1000:1000 /pumpos/boot.sh
 
 # Renable for next boot
-systemctl enable piu
+systemctl enable pumpos
 
 echo "===== Done ====="
 echo "Installation completed. Reboot the system."
@@ -245,4 +245,4 @@ printf '%s' '#!/bin/bash
 clear
 echo "======= OS installation completed ======="
 echo "Error booting, no data deployed."
-exit 0' > /piu/boot.sh
+exit 0' > /pumpos/boot.sh

@@ -1,12 +1,12 @@
 #!/bin/bash
 
-readonly PATH_PIU_DATA="/piu"
+readonly PATH_PUMPOS_ROOT="/pumpos"
 readonly APT_SOURCES="/etc/apt/sources.list"
 
 environment_check()
 {
     # Check if this is running inside the chroot environment
-    if [ ! -d "$PATH_PIU_DATA" ]; then
+    if [ ! -d "$PATH_PUMPOS_ROOT" ]; then
         echo "Not running inside chroot environment, don't execute this script"
         exit 1
     fi
@@ -138,15 +138,15 @@ create_user()
     usermod -aG sudo "$user"
 }
 
-setup_piu_boot_env()
+setup_pumpos_boot_env()
 {
     echo ""
-    echo "##### Setup piu boot environment... #####"
+    echo "##### Setup pumpos boot environment... #####"
 
     # Create startup service for boot.sh to run on tty1
     printf "%s" "
 [Unit]
-Description=PIU Boot
+Description=pumpos boot
 After=getty.target
 Conflicts=getty@tty1.service
 
@@ -156,15 +156,15 @@ WantedBy=multi-user.target
 [Service]
 Type=oneshot
 RemainAfterExit=yes
-ExecStart=/piu/boot.sh
-WorkingDirectory=/piu
+ExecStart=/pumpos/boot.sh
+WorkingDirectory=/pumpos
 StandardInput=tty-force
 StandardOutput=inherit
 StandardError=inherit
-" > /etc/systemd/system/piu.service
+" > /etc/systemd/system/pumpos.service
 
-    chmod +x /etc/systemd/system/piu.service
-    systemctl enable piu.service
+    chmod +x /etc/systemd/system/pumpos.service
+    systemctl enable pumpos.service
 }
 
 ####################
@@ -195,7 +195,7 @@ install_network_stuff
 set_hostname "$config_hostname"
 set_root_password "$config_password"
 create_user "$config_username" "$config_password"
-setup_piu_boot_env
+setup_pumpos_boot_env
 
 echo "##### Done in chroot environment #####"
 exit 0
