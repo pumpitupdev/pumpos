@@ -2,7 +2,7 @@
 
 # Root path of this script
 readonly ROOT_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-readonly MOUNT_POINT_PUMPOS="/tmp/pumpos2"
+readonly MOUNT_POINT_PUMPOS="/tmp/pumpos"
 readonly PUMPOS_DATA="/piu"
 readonly MOUNT_POINT_PUMPOS_DATA="$MOUNT_POINT_PUMPOS$PUMPOS_DATA"
 readonly CHROOT_SETUP_SCRIPT="setup-as-chroot.sh"
