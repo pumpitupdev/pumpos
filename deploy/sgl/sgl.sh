@@ -27,7 +27,7 @@ deploy_sgl()
     log_debug "  Updating sgl binary distribution files..."
 
     cp "$sgl_zip_path" "$target_pumpos_piu_sgl_dir"
-    unzip "$target_pumpos_piu_sgl_dir/$(basename "$sgl_zip_path")" -d "$target_pumpos_piu_sgl_dir" > /dev/null
+    unzip -o "$target_pumpos_piu_sgl_dir/$(basename "$sgl_zip_path")" -d "$target_pumpos_piu_sgl_dir" > /dev/null
     rm "$target_pumpos_piu_sgl_dir/$(basename "$sgl_zip_path")"
 
     # Fix permissions
