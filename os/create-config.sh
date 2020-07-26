@@ -69,6 +69,26 @@ gpu_driver()
     done
 }
 
+packages()
+{
+    while [ ! "$config_packages" ]; do
+        echo "Please select a package list file with software to install (apt-packages path):"
+        echo "piu"
+
+        echo -n "> "
+        read -r config_packages
+
+        case "$config_packages" in
+            "piu")
+                ;;
+            *)
+                echo "Invalid package list selected."
+                config_packages=""
+                ;;
+        esac
+    done
+}
+
 apt_mirror()
 {
     echo "Optional: Please enter an apt host, e.g. a local cache (leave empty to skip)"
@@ -89,6 +109,7 @@ print_summary()
     echo "username: $config_username"
     echo "password: ***HIDDEN***"
     echo "gpu driver: $config_gpu_driver"
+    echo "packages: $config_packages"
     echo "apt host (optional): $config_apt_host"
     echo "apt mirror (optional): $config_apt_mirror"
 }
@@ -102,6 +123,7 @@ write_to_config_file()
         echo "PUMPOS_CONFIG_USERNAME=$config_username"
         echo "PUMPOS_CONFIG_PASSWORD=$config_password"
         echo "PUMPOS_CONFIG_GPU_DRIVER=$config_gpu_driver"
+        echo "PUMPOS_CONFIG_PACKAGES=$config_packages"
         echo "PUMPOS_CONFIG_APT_HOST=$config_apt_host"
         echo "PUMPOS_CONFIG_APT_MIRROR=$config_apt_mirror"
     } > "$out_file"
@@ -123,6 +145,7 @@ hostname
 username
 password
 gpu_driver
+packages
 apt_mirror
 
 print_summary

@@ -68,6 +68,8 @@ setup_pumpos()
 
     cp "$CHROOT_SETUP_SCRIPT_PATH" "$MOUNT_POINT_PUMPOS_DATA/$CHROOT_SETUP_SCRIPT"
     chmod +x "$MOUNT_POINT_PUMPOS_DATA/$CHROOT_SETUP_SCRIPT"
+
+    cp "$config_packages" "$MOUNT_POINT_PUMPOS_DATA/packages.txt"
 }
 
 chroot_exec_install()
@@ -75,7 +77,12 @@ chroot_exec_install()
     echo ""
     echo "##### Exec install inside chroot... #####"
 
-    $CHROOT_EXEC_SCRIPT_PATH "$MOUNT_POINT_PUMPOS" "$PUMPOS_DATA/$CHROOT_SETUP_SCRIPT" "$config_hostname" "$config_username" "$config_password"
+    $CHROOT_EXEC_SCRIPT_PATH \
+        "$MOUNT_POINT_PUMPOS" \
+        "$PUMPOS_DATA/$CHROOT_SETUP_SCRIPT" \
+        "$config_hostname" \
+        "$config_username" \
+        "$config_password"
 }
 
 unmount_partition()
@@ -90,8 +97,8 @@ unmount_partition()
 # Main entry point #
 ####################
 
-if [ $# -lt 4 ]; then
-    echo "Usage: $0 <target disk, e.g. sdd> <hostname> <username> <password> [apt host] [apt mirror]"
+if [ $# -lt 5 ]; then
+    echo "Usage: $0 <target disk, e.g. sdd> <hostname> <username> <password> <packages> [apt host] [apt mirror]"
     exit 1
 fi
 
@@ -99,8 +106,9 @@ target_disk="$1"
 config_hostname="$2"
 config_username="$3"
 config_password="$4"
-config_apt_host="$5"
-config_apt_mirror="$6"
+config_packages="$5"
+config_apt_host="$6"
+config_apt_mirror="$7"
 
 # Exit if any command fails
 set -e

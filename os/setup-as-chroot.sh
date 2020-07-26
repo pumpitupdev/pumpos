@@ -1,6 +1,7 @@
 #!/bin/bash
 
 readonly PATH_PUMPOS_ROOT="/pumpos"
+readonly PATH_PACKAGES="$PATH_PUMPOS_ROOT/packages.txt"
 readonly APT_SOURCES="/etc/apt/sources.list"
 
 environment_check()
@@ -191,107 +192,18 @@ install_gpu_driver()
     libglu1-mesa:i386
 }
 
-install_alsa()
+install_packages()
 {
     echo ""
-	echo "##### Install alsa... #####"
+	echo "##### Install packages ... #####"
 
-	apt-get -y install \
-	alsa-base \
-	alsa-utils \
-	alsa-tools
-}
-
-install_x11()
-{
-    echo ""
-	echo "##### Install X11... #####"
-
-	apt-get -y install \
-	xorg \
-	xinit \
-	x11-xserver-utils \
-	xserver-xorg-core
-}
-
-install_dev_tools()
-{
-    echo ""
-    echo "##### Install dev tools... #####"
-
-    # nano because I am not going to torture myself using vi
-    apt-get -y install \
-        vim \
-        nano \
-	gdb \
-	gdbserver\
-	strace
-}
-
-install_deps_pumptools()
-{
-    echo ""
-    echo "##### Install deps pumptools... #####"
-
-    apt-get -y install \
-    libusb-1.0-0:i386 \
-    libxtst6:i386 \
-    libstdc++5:i386 \
-    libcurl4:i386 \
-    libcurl3-gnutls:i386
-}
-
-install_deps_sgl()
-{
-    echo ""
-    echo "##### Install deps sgl... #####"
-
-    apt-get -y install \
-	libsdl2-2.0-0 \
-	libsdl2-image-2.0-0 \
-	libsdl2-ttf-2.0-0 \
-	ffmpeg
-}
-
-install_deps_mk3_ports()
-{
-    echo ""
-    echo "##### Install deps mk3 ports... #####"
-
-    apt-get -y install \
-    gcc-multilib \
-    libusb-0.1-4:i386 \
-    libconfig++9v5:i386 \
-    lib32tinfo5 \
-    lib32ncurses5 \
-    libxcursor1:i386 \
-    libxinerama1:i386 \
-    libxi6:i386 \
-    libxrandr2:i386 \
-    libxxf86vm1:i386 \
-    libx11-6:i386 \
-    libasound2:i386
-}
-
-install_deps_exc()
-{
-    echo ""
-    echo "##### Install deps exc... #####"
-
-    apt-get -y install \
-    gcc-multilib \
-    libx11-6:i386 \
-    zlib1g:i386 \
-    libasound2:i386
-}
-
-install_deps_nx2()
-{
-    echo ""
-    echo "##### Install deps nx2... #####"
-
-    apt-get -y install \
-    libfreetype6:i386
+    if [ -e "$PATH_PACKAGES" ]; then
+        cat "$PATH_PACKAGES" | xargs sudo apt-get -y install
+        rm "$PATH_PACKAGES"
+    else
+        echo "WARNING: Missing packages.txt file, skipping package installation"
+        sleep 5
+    fi
 }
 
 remove_apt_get_proxy()
@@ -383,14 +295,7 @@ set_timezone
 enable_multiarch
 install_ssh
 install_gpu_driver
-install_alsa
-install_x11
-install_dev_tools
-install_deps_pumptools
-install_deps_sgl
-install_deps_mk3_ports
-install_deps_exc
-install_deps_nx2
+install_packages
 remove_apt_get_proxy
 
 # Bootstrapping for pumpos

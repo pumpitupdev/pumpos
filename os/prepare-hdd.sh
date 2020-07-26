@@ -3,7 +3,8 @@
 user_prompt()
 {
     echo "!!! WARNING !!!"
-    echo "Are you sure you want to install pumpos on disk '$config_target_disk'?"
+    echo "Are you sure you want to install pumpos on disk"
+    echo ">>>  $config_target_disk  <<<"
     echo "This will wipe the ENTIRE disk and cannot be undone!"
     echo "To continue, type i am sure in caps."
 

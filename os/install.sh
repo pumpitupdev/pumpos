@@ -3,7 +3,8 @@
 # Root path of this script
 readonly ROOT_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 readonly PREPARE_HDD_SCRIPT_PATH="$ROOT_PATH/prepare-hdd.sh"
-readonly SYTEM_INSTALL_SCRIPT_PATH="$ROOT_PATH/system-install.sh"
+readonly SYSTEM_INSTALL_SCRIPT_PATH="$ROOT_PATH/system-install.sh"
+readonly APT_PACKAGE_LIST_PATH="$ROOT_PATH/../apt-packages"
 
 check_command_available()
 {
@@ -62,6 +63,7 @@ configuration_confirmation()
     echo "username: $PUMPOS_CONFIG_USERNAME"
     echo "password: ***HIDDEN***"
     echo "gpu driver: $PUMPOS_CONFIG_GPU_DRIVER"
+    echo "packages: $PUMPOS_CONFIG_PACKAGES"
     echo "apt host (optional): $PUMPOS_CONFIG_APT_HOST"
     echo "apt mirror (optional): $PUMPOS_CONFIG_APT_MIRROR"
 
@@ -122,7 +124,16 @@ system_installation()
     echo "System installation"
     echo "##################################################################"
 
-    "$SYTEM_INSTALL_SCRIPT_PATH" "$config_target_disk" "$PUMPOS_CONFIG_HOSTNAME" "$PUMPOS_CONFIG_USERNAME" "$PUMPOS_CONFIG_PASSWORD" "$PUMPOS_CONFIG_APT_HOST" "$PUMPOS_CONFIG_APT_MIRROR"
+    local package_path="$APT_PACKAGE_LIST_PATH/${PUMPOS_CONFIG_PACKAGES}.txt"
+
+    "$SYSTEM_INSTALL_SCRIPT_PATH" \
+        "$config_target_disk" \
+        "$PUMPOS_CONFIG_HOSTNAME" \
+        "$PUMPOS_CONFIG_USERNAME" \
+        "$PUMPOS_CONFIG_PASSWORD" \
+        "$package_path" \
+        "$PUMPOS_CONFIG_APT_HOST" \
+        "$PUMPOS_CONFIG_APT_MIRROR"
 
     if [ "$?" != "0" ]; then
         exit 1
