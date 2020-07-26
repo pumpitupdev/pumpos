@@ -7,8 +7,8 @@ readonly ROOT_PATH_PROJECT="$ROOT_PATH/../.."
 readonly PUMPOS_SCRIPT="$ROOT_PATH_PROJECT/pumpos.sh"
 
 if [ $# -lt 1 ]; then
-    echo "Pipeline to configure a PIU deployment on a pumpos target"
-    echo "Usage: pipeline-piu-conf <cfg file>"
+    echo "Pipeline to configure games for an ITG cabinet to a pumpos target"
+    echo "Usage: pipeline-itg-conf <cfg file>"
     exit 1
 fi
 
@@ -23,5 +23,4 @@ source "$cfg_file"
 
 set -e
 
-"$PUMPOS_SCRIPT" conf-pumptools "$PUMPOS_ROOT" "$PUMPTOOLS_CONF_PATH"
 "$PUMPOS_SCRIPT" conf-boot "$PUMPOS_ROOT" "sgl"

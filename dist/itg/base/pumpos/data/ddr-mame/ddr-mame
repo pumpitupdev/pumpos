@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+
+###
+# Bootstrap script to run (Groovy) MAME
+#
+# The following environment variables are optional but allow you to tweak some common parameters to
+# run mame:
+#
+# DDR_MAME_GAME - If not defined/empty MAME starts the menu. If you set this to a name of an
+#                 available rom set, e.g. DDR_MAME_GAME=ddrextrm for DDR Extreme, MAME will boot
+#                 straight into the game when started.
+#
+# DDR_MAME_RES_VERT - Force a pre-defined resolution when running mame, e.g. DDR_MAME_RES_VERT=480
+#                     for 640x480.
+#
+# DDR_MAME_GAME - Run MAME in different "modes", e.g. DDR_MAME_GAME=run is what you usually use to
+#                 "just" run MAME. DDR_MAME_GAME=debug runs MAME with additional logging to a file
+#                 for debugging purpose.
+###
+
+# Root path is path of this script
+root_path="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+mame_res_arg=""
+
+if [ ! -e "$root_path/mamearcade64" ]; then
+    echo "Cannot start MAME, cannot find mame executable."
+    exit 1
+fi
+
+case $DDR_MAME_RES_VERT in
+    "480")
+        ;&
+    *)
+        xrandr -s 640x480 -r 60
+        mame_res_arg="640x480@60"
+        ;;
+esac
+
+# Default if not specified
+if [ ! "$DDR_MAME_MODE" ]; then
+    DDR_MAME_MODE="run"
+fi
+
+case "$DDR_MAME_MODE" in
+    "run")
+        exec "$root_path/mamearcade64" -resolution "$mame_res_arg" "roms/${DDR_MAME_GAME}.zip"
+        ;;
+
+    "debug")
+        exec "$root_path/mamearcade64" -verbose -resolution "$mame_res_arg" "roms/${DDR_MAME_GAME}.zip" > mame.log 2>&1
+        ;;
+
+    *)
+        echo "ERROR: Invalid mode specified: $DDR_MAME_MODE"
+        exit 1
+        ;;
+esac

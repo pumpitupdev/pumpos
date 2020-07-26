@@ -2,6 +2,11 @@ alsa-base
 alsa-tools
 alsa-utils
 ffmpeg
+libdw1
+libqt5widgets5
+libsdl2-2.0-0
+libsdl2-image-2.0-0
+libsdl2-ttf-2.0-0
 libusb-1.0-0
 libx11-6
 libxcursor1
@@ -16,3 +21,7 @@ x11-xserver-utils
 xinit
 xorg
 xserver-xorg-core
+libmad0
+libjpeg62
+libusb-0.1-4
+liblua5.1-0

@@ -9,7 +9,7 @@ readonly PUMPOS_SCRIPT="$ROOT_PATH_PROJECT/pumpos.sh"
 
 if [ $# -lt 1 ]; then
     echo "Pipeline to deploy PIU games to a pumpos target"
-    echo "Usage: $0 <cfg file>"
+    echo "Usage: pipeline-piu-deploy <cfg file>"
     exit 1
 fi
 

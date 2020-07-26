@@ -30,6 +30,9 @@ case "$1" in
     deploy-dir)
         "$ROOT_PATH/deploy/dir.sh" "${@:2}"
         ;;
+    deploy-zip)
+        "$ROOT_PATH/deploy/zip.sh" "${@:2}"
+        ;;
 
     deploy-sgl)
         "$ROOT_PATH/deploy/sgl/sgl.sh" "${@:2}"
@@ -48,6 +51,13 @@ case "$1" in
         "$ROOT_PATH/deploy/piu/save.sh" "${@:2}"
         ;;
 
+    deploy-itg-mame-ddrio)
+        "$ROOT_PATH/deploy/itg/mame-ddrio.sh" "${@:2}"
+        ;;
+    deploy-itg-mame-roms)
+        "$ROOT_PATH/deploy/itg/mame-roms.sh" "${@:2}"
+        ;;
+
     conf-boot)
         "$ROOT_PATH/conf/boot.sh" "${@:2}"
         ;;
@@ -60,6 +70,13 @@ case "$1" in
         ;;
     pipeline-piu-conf)
         "$ROOT_PATH/pipeline/piu/conf.sh" "${@:2}"
+        ;;
+
+    pipeline-itg-deploy)
+        "$ROOT_PATH/pipeline/itg/deploy.sh" "${@:2}"
+        ;;
+    pipeline-itg-conf)
+        "$ROOT_PATH/pipeline/itg/conf.sh" "${@:2}"
         ;;
         
     *)
@@ -74,7 +91,7 @@ case "$1" in
         echo ""
         echo "Deploy stuff (fine granular)"
         echo "  deploy-dir - Deploy/update a directory on pumpos with a local one"
-        echo ""
+        echo "  deploy-zip - Extract the contents of a zip file and deploy them to a target dir on pumpos"
         echo ""
         echo "  deploy-sgl - Deploy/update SGL data from distribution package"
         echo ""
@@ -83,6 +100,8 @@ case "$1" in
         echo "  deploy-piu-backup-save - Backup all piu save directories on a target pumpos deployment"
         echo "  deploy-piu-save        - Deploy all backed up save directories of piu games to a target deployment"
         echo ""
+        echo "  deploy-itg-mame-ddrio  - Deploy/update the ddrio piuio itg impl for ddr-mame"
+        echo "  deploy-itg-mame-roms   - Deploy/update roms for ddr-mame"
         echo ""
         echo "Configure stuff"
         echo "  conf-boot - Configure what pumpos is supposed to do/run on boot"
@@ -90,9 +109,12 @@ case "$1" in
         echo "  conf-piu-pumptools - Configure the hooks of the pumptools deployment of one or multiple games"
         echo ""
         echo ""
-        echo "Pipelines combining many steps (coarse granular)"
+        echo "Pipelines combining many steps"
         echo "  pipeline-piu-deploy - Pipeline to deploy piu games to a pumpos target"
         echo "  pipeline-piu-conf   - Pipeline to configure piu games on a pumpos target"
+        echo ""
+        echo "  pipeline-itg-deploy - Pipeline to deploy games for an ITG cabinet to a pumpos target"
+        echo "  pipeline-itg-conf   - Pipeline to configure games an a ITG cabinet pumpos target"
         echo ""
         
         exit 1
