@@ -227,7 +227,7 @@ After=getty.target
 Conflicts=getty@tty1.service
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=graphical.target
 
 [Service]
 Type=oneshot
