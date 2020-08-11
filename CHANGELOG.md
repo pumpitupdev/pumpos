@@ -1,5 +1,11 @@
 # Release history
 ## 1.06
+* Use pumpos base system as a foundation for ITG 2 cabinets
+* Refactor deployment infrastructure to enable deploying of PIU games or ITG 2 and ddr-mame
+* deployment pipeline scripts to streamline full deployments which reduces the amount of commands to
+input a lot (see readme)
+* Base OS does not need to be booted anymore on the target hardware for post installation. All
+installation is done in the chroot environment
 
 ## 1.05
 * sgl: Dist files with optional support for piu (pro) button board
