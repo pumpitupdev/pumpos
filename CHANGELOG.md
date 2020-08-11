@@ -1,5 +1,11 @@
 # Release history
 ## 1.05
+* sgl: Dist files with optional support for piu (pro) button board
+* Readme: Add short version with commands only for full cabinet deployment
+* Add backup save script to easily backup all save folders from a piu deployment:
+`./pumpos.sh backup-save`
+* Add dist data for piu pro to prime
+* Various bugfixes
 
 ## 1.04
 * Add support for NX2 deployment
