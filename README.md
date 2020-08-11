@@ -200,15 +200,45 @@ command to apply the changes to the games in the list:
 1. Boot the target hardware and it should start the configured game.
 
 #### Use pipelines for batching steps
-Pipelines are just shell scripts combining multiple steps for either a (repeatetive) standard
+The following assumes that you are familiar with how the different pumpos scripts work to reduce
+the effort of typing in many commands.
+
+Pipelines are just shell scripts combining multiple steps for either a (repetitive) standard
 deployment, e.g. PIU multi disk for arcade cabinet use.
 
 ##### Pump It Up
 * `pipeline/piu/deploy.sh`: Execute a full deployment on an empty pumpos disk (fresh OS install).
 A configuration file defines various variables/paths required. See
-`cfg/piu/pipeline/deploy-piu.cfg`. Adjust the paths as needed.
+`cfg/piu/pipeline/deploy-piu.cfg`. Adjust the paths as needed pointing to the required data for
+deployment.
 * `pipeline/piu/conf.sh`: Execute configuration after the deployment. A configuration file defines
 various variables. See `cfg/piu/pipeline/conf-piu-cabinet.cfg`
+
+Run the pipeline deployment:
+```bash
+./pumpos.sh pipeline-piu-deploy ./cfg/piu/pipeline/deploy-piu.cfg
+```
+
+Configure the deployment:
+```bash
+./pumpos.sh pipeline-piu-conf ./cfg/piu/pipeline/conf-piu.cfg
+```
+
+Check the `pipeline/piu/conf.sh` file for the configuration steps applied and tweak the involved
+configuration files accordingly, e.g. `./cfg/piu/pipeline/conf-piu.cfg` bemanitools config file etc.
+
+##### In The Groove
+Same as the PIU scripts in the above section applies here.
+
+Run the pipeline deployment:
+```bash
+./pumpos.sh pipeline-itg-deploy ./cfg/itg/pipeline/deploy-itg.cfg
+```
+
+Configure the deployment:
+```bash
+./pumpos.sh pipeline-itg-conf ./cfg/itg/pipeline/conf-itg.cfg
+```
 
 ### Use scripts to deploy data and configure local setups on a host
 For development and testing, you can also use the scripts to deploy/update data
