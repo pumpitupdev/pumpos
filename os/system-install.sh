@@ -83,6 +83,8 @@ chroot_exec_install()
         "$config_hostname" \
         "$config_username" \
         "$config_password"
+
+    rm "$CHROOT_EXEC_SCRIPT_PATH"
 }
 
 unmount_partition()

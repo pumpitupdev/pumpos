@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+
+/pumpos/data/00_bootstrap/run.sh /pumpos/data/09_prex1/run.cfg

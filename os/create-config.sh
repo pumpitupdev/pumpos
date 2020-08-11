@@ -73,12 +73,15 @@ packages()
 {
     while [ ! "$config_packages" ]; do
         echo "Please select a package list file with software to install (apt-packages path):"
+        echo "itg"
         echo "piu"
 
         echo -n "> "
         read -r config_packages
 
         case "$config_packages" in
+            "itg")
+                ;;
             "piu")
                 ;;
             *)

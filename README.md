@@ -1,9 +1,9 @@
-# Pumpos: Create, deploy, configure and manage a setup for running Pump It Up
+# Pumpos: Create, deploy, configure and manage a setup for running Pump It Up and In The Groove
 Version: 1.06</br>
 [Release history](CHANGELOG.md)
 
 ## What is this all about?
-* Easy and automatic creation of an OS base image for use with Pump games.
+* Easy and automatic creation of an OS base image for use with Pump games and ITG.
 This includes all required configuration and software packages.
 * Basic filesystem structure for easy deployment of any supported game
 * Quick and easy deployment/update of pumptools, also batch deployment
@@ -22,10 +22,11 @@ that is capable of moving around data is fine.
 For your target remote machine, which is going to run the deployed operating system
 and games, make sure it fulfills the following requirements:
 * CPU with 64-bit support; sorry, stock MK6 hardware won't work
-* If using a Nvidia GPU: Anything that supports the 340 driver which means at least a GeForce 8 series (8000+) card 
-from around end of 2006. Sorry, but that criteria kills stock MK9 hardware which comes with a 7200. There is patched
-version of the 304 driver which supports these cards but it's hacky and not worth the additional effort, at least at
-this point in time.
+* If using a Nvidia GPU: Anything that supports the 340 driver which means at least
+a GeForce 8 series (8000+) card from around end of 2006. Sorry, but that criteria
+kills stock MK9 hardware which comes with a 7200. There is patched version of the
+304 driver which supports these cards but it's hacky and not worth the additional
+effort, at least at this point in time.
 
 ## Dependencies
 Naturally, these scripts require a Linux environment, e.g. either a native
@@ -57,23 +58,27 @@ Either directly by connecting it to the motherboard (if possible) or by using
 1. USB adapter or similar external device.
 1. Check that the connected disk is recognized by the system, e.g. `lsblk`.
 1. Have game data to deploy ready on your host system in a directory, e.g.
-`piu-data`. This folder contains one sub-folder for each game identical to the
-directory structure in this repositories `dist/piu/data` folder, e.g.
+`pumpdata/data`. This folder contains one sub-folder for each game identical to the
+directory structure in this repositories `dist/piu/base/pumpos/data` folder, e.g.
 ```
-piu-data
-  01_1st
-    game.zip
-    lib-local.zip
-    lib-ld.zip
-    piu
-    version
-  02_2nd
-    ...
-  03_obg
+pumpdata
+  data
+    01_1st
+      game.zip
+      lib-local.zip
+      lib-ld.zip
+      piu
+      version
+    02_2nd
+      ...
+    03_obg
+      ...
     ...
   ...
 ```
 1. A distribution package of pumptools, the `pumptools.zip` file.
+1. Optional: A distributation package of SGL, the `sgl-linux.zip` file.
+1. Optional: SGL assets for PIU/ITG, e.g. `sgldata/data/piu` housing the assets.
 
 ### Using the scripts
 In general, you can always just run `./pumpos.sh` to get a list of available
@@ -81,177 +86,185 @@ commands and a brief description. To get usage information about single
 commands, just run the script with the command as an argument without any
 further arguments, e.g. `./pumpos.sh os-conf`.
 
+#### Building your pumpos disk image step by step
 Each command requires you to check for errors and not move on with any further
-steps.
+steps. The following example shows you how to create a multi-disk for PIU
+games. Similar steps apply for a ITG multi-disk.
 
+If you want a summary of the commands to run or run them in batch easily,
+use the [pipeline commands](#use-pipelines-for-batching-steps) instead.
+
+##### OS
 1. Create a OS configuration by running the `os-config` command and following
-the instructions: `./pumpos.sh os-config ./pumpos.conf`.
+the instructions:
+```bash
+./pumpos.sh os-config ./pumpos.cfg
+```
 1. Run the installation of the Linux system by running the `os-install` command
-with the created configuration provided: `./pumpos.sh os-install ./pumpos.conf`.
+with the created configuration provided: 
+```bash
+./pumpos.sh os-install ./pumpos.cfg
+```
 Follow the instructions on screen. Stick around for the installation process
-because you will be prompted to select a
-[console setup](doc/pumpos.md#configure-console-setup) and to
+because you will be prompted to 
 [select the drive where to install the bootloader on](doc/pumpos.md#select-a-drive-to-install-the-bootloader-on).
 1. Once installation on your host machine finished successfully, you are
-instructed to connect the disk to your target hardware to finish the post
-installation process. Do it! Do it!
-1. Power on the target hardware, let the system boot and finish the post
-installation step. It should automatically reboot once it successfully
-completed this step.
-1. Shutdown the target hardware and disconnect the disk. Re-connect it to your
-host machine.
-1. Ensure you have the root folder of the disk mounted somewhere. Examples of
-further steps assume you have it mounted on `/mnt/pumpos`. Change the path
-if necessary.
+instructed to connect the disk to your target hardware and check if everything
+boots up nicely. Do it! Do it!
+1. If everything turns out to be fine shutdown the target hardware and
+disconnect the disk. Re-connect it to your host machine.
+
+##### Deploy PIU data
+1. Ensure you have the root folder of the disk mounted somewhere. For example,
+if the disk shows up as `sdd` (use `lsblk`):
+```bash
+mount /dev/sdd1 /mnt/pumpos
+```
+Examples of further steps assume you have it mounted on `/mnt/pumpos`. Change
+the path if necessary.
 1. If you want to use pumpnet, put the certificate files you have received
-into the `dist/shared/certs` folder without adding further sub-folders. The
-certs will be deployed on the `deploy-base` command.
-1. Deploy the base directory structure by running the `deploy-base` command,
-e.g. `./pumpos.sh deploy-base /mnt/pumpos/piu`.
-1. Deploy game data to the disk by using the `deploy-data` command. You can
-either batch deploy multiple games, e.g.
-`./pumpos.sh deploy-data /mnt/pumpos/piu /path/to/piu-data local`, or single
-games, e.g.
-`./pumpos.sh deploy-data /mnt/pumpos/piu /path/to/piu-data local 01_1st`.
-1. Deploy pumptools by running the `deploy-pumptools` command. You can either
-batch deploy to multiple games, e.g.
-`./pumpos.sh deploy-pumptools /mnt/pumpos/piu /path/to/pumptools.zip` or to a
-single game, e.g.
-`./pumpos.sh deploy-pumptools /mnt/pumpos/piu /path/to/pumptools.zip 01_1st`.
-1. Create a
-[configuration file for configuring the pumptools hooks](doc/conf-pumptools.md).
-1. Configure pumptools of the deployed games by using the `conf-pumptools`
-command. You can either batch configure all games e.g.
-`./pumpos.sh conf-pumptools /mnt/pumpos/piu /path/to/pumptools.conf`, or
-configure just a single game, e.g.
-`./pumpos.sh conf-pumptools /mnt/pumpos/piu /path/to/pumptools.conf 01_1st`
-1. Configure pumptools using the `conf-pumptools` command:
-    1. For running on cabinets with real IO support, you can use the
-    `conf/pumptools-cabinet.conf` included which configures all games:
-    `./pumpos.sh conf-pumptools /mnt/pumpos/piu ./conf/pumptools-cabinet.conf`
-    1. For running on desktops with keyboard support, you can use the
-    `conf/pumptools-desktop.conf` included which configures all games:
-    `./pumpos.sh conf-pumptools /mnt/pumpos/piu ./conf/pumptools-desktop.conf`
+into the `dist/piu/base/pumpos/data/00_bootstrap/certs` folder without adding
+further sub-folders. The certs will be deployed on one of the next steps.
+1. Deploy the pumpos base directory structure by running the `deploy-dir` command:
+```bash
+./pumpos.sh deploy-base /mnt/pumpos/pumpos ./dist/base/pumpos
+```
+1. Deploy the piu base directory structure by running the `deploy-dir` command:
+```bash
+./pumpos.sh deploy-base /mnt/pumpos/pumpos ./dist/piu/base/pumpos
+```
+1. Deploy game data to the disk by using the `deploy-piu-data` command. You can
+either batch deploy multiple games:
+```bash
+./pumpos.sh deploy-data /mnt/pumpos/pumpos /path/to/pumpdata/data local
+```
+or single games
+```bash
+./pumpos.sh deploy-data /mnt/pumpos/piu /path/to/pumpdata/data local 01_1st
+```
+1. Deploy pumptools by running the `deploy-piu-pumptools` command. You can either
+batch deploy to multiple games:
+```bash
+./pumpos.sh deploy-piu-pumptools /mnt/pumpos/pumpos /path/to/pumptools.zip
+```
+ or to a single game:
+ ```bash
+./pumpos.sh deploy-piu-pumptools /mnt/pumpos/pumpos /path/to/pumptools.zip 01_1st
+```
+
+##### Optional: deploy SGL
 1. Optional: If you want to use [SGL](https://dev.s-ul.eu/hackitup/sgl) for
 bootstrapping the games, you have to deploy the binaries and assets:
 `./pumpos.sh deploy-sgl /mnt/pumpos/piu /path/to/sgl-linux.zip /path/to/sgldata/data/piu`
+
+
+##### Configure
 1. Configure the boot process of pumpos with the `conf-boot` command defining how the
 games are bootstrapped:
     1. Single game bootstrapping: e.g. to always boot 01_1st:
-    `./pumpos.sh conf-boot /mnt/pumpos/piu game 01_1st`
+    ```bash
+    ./pumpos.sh conf-boot /mnt/pumpos/pumpos game 01_1st
+    ```
     1. SGL bootstrapping (requires SGL deployed): 
-    `./pumpos.sh conf-boot /mnt/pumpos/piu sgl`
-1. If you want to use pumpnet, modify the `conf/pumptools-network.conf` file
-by setting your machine ID and the pumpnet URL. Do another `conf-pumptools`
+    ```bash
+    ./pumpos.sh conf-boot /mnt/pumpos/pumpos sgl
+    ```
+    1. For development, dropping to shell:
+    ```bash
+    ./pumpos.sh conf-boot /mnt/pumpos/pumpos dev
+    ```
+1. Use one of the available pumptools configuration files from `cfg/piu/pumptools` or
+[create a custom one](doc/conf-pumptools.md).
+    1. For running on cabinets with real IO support, use `cfg/piu/pumptools/cabinet.cfg`.
+    1. For running on desktops with keyboard support, use `cfg/piu/pumptools/desktop.cfg`.
+1. Configure pumptools of the deployed games by using the `conf-piu-pumptools`
+command. You can either batch configure all games:
+```bash
+./pumpos.sh conf-piu-pumptools /mnt/pumpos/pumpos /path/to/pumptools.cfg
+```
+or configure just a single game
+```bash
+./pumpos.sh conf-piu-pumptools /mnt/pumpos/pumpos /path/to/pumptools.cfg 01_1st
+```
+1. If you want to use pumpnet, modify the `cfg/piu/pumptools/network.conf` file
+by setting your machine ID and the pumpnet URL. Execute another `conf-piu-pumptools`
 command to apply the changes to the games in the list:
-`./pumpos.sh conf-pumptools /mnt/pumpos/piu ./conf/pumptools-network.conf`
-1. Unmount: `umount /mnt/pumpos/piu` 
+```bash
+`/pumpos.sh conf-piu-pumptools /mnt/pumpos/pumpos ./cfg/piu/pumptools/pumptools-network.conf
+```
+
+##### Wrapping things up
+1. Unmount: `umount /mnt/pumpos` 
 1. Disconnect the disk attached to your host.
 1. Connect the disk back to your target hardware.
 1. Boot the target hardware and it should start the configured game.
 
+#### Use pipelines for batching steps
+Pipelines are just shell scripts combining multiple steps for either a (repeatetive) standard
+deployment, e.g. PIU multi disk for arcade cabinet use.
+
+##### Pump It Up
+* `pipeline/piu/deploy.sh`: Execute a full deployment on an empty pumpos disk (fresh OS install).
+A configuration file defines various variables/paths required. See
+`cfg/piu/pipeline/deploy-piu.cfg`. Adjust the paths as needed.
+* `pipeline/piu/conf.sh`: Execute configuration after the deployment. A configuration file defines
+various variables. See `cfg/piu/pipeline/conf-piu-cabinet.cfg`
+
 ### Use scripts to deploy data and configure local setups on a host
 For development and testing, you can also use the scripts to deploy/update data
 on the same host machine. Instead of specifying paths to a mounted disk on the
-commands `deploy-base`, `deploy-data`, `deploy-pumptools` and `conf-pumptools`,
+commands `deploy-dir`, `deploy-piu-data`, `deploy-piu-pumptools` and `conf-piu-pumptools`,
 just set it to a local folder. Any other commands are not required for such a
 setup and can be ignored.
 
-### Use scripts to deploy and configure SGL (Simple Game Loader)
-SGL provides a front-end to select a game of your choice on a setup with multiple
-games on a single installation.
-
-In order to enable that, you have to add the following steps to the deployment
-and configuration process, e.g. before the end when
-[unmounting the disk](#using-the-scripts):
-1. Download or compile the SGL binary distribution package for Linux. See the
-`sgl` repository for instructions. You need the `sgl-linux.zip` output file.
-1. Have the `piu` data from the `sgldata` repository ready on your host
-machine.
-1. Deploy SGL: `./pumpos.sh deploy-sgl /mnt/pumpos/piu /path/to/sgl-linux.zip /path/to/sgldata/data/piu`
-1. Configure the boot process to run SGL on boot: `./pumpos.sh conf-boot /mnt/pumpos/piu sgl`
-1. Unmount: `umount /mnt/pumpos` 
-1. Disconnect the disk attached to your host.
-1. Connect the disk back to your target hardware.
-1. Boot the target hardware and it should start SGL which allows you to select
-the game that you want to play.
-
-### Backup save folders before full re-deployment
-If you want to fully re-deploy to your existing disk which includes a fresh installation of the base OS, you can let
-the pumpos scripts backup your save folders which includes operator settings, local high scores and more.
+### PIU: Backup save folders before full re-deployment
+If you want to fully re-deploy to your existing disk which includes a fresh installation of the
+base OS, you can let the pumpos scripts backup your save folders which includes operator settings,
+local high scores and more.
 
 Make sure your drive is connected and mounted on your local machine.
 
 ```shell script
-./pumpos.sh backup-save /mnt/pumpos/piu
+./pumpos.sh deploy-piu-backup-save /mnt/pumpos/pumpos
 ```
 
-Running the above command creates zip files of all save folders and backs them up to the folder `backup/save` of the
-local pumpos project.
+Running the above command creates zip files of all save folders and backs them up to the folder
+`backup/piu/save` of the local pumpos project.
 
 You can restore the backup once you have re-deployed everything with the following command:
 
 ```shell script
-./pumpos.sh deploy-save /mnt/pumpos/piu
+./pumpos.sh deploy-piu-save /mnt/pumpos/pumpos
 ```
 
 ### Enable caching layer for apt packages
-If you have to install pumpos multiple times, e.g. developing, testing or debugging, it is highly recommended
-to start the `apt-cache` docker container provided with pumpos. This container runs locally on your host
-workstation and serves all packages to download as a proxy from your local network which speeds up installation
-and build times of pumpos images a lot.
+If you have to install pumpos multiple times, e.g. developing, testing or debugging, it is highly
+recommended to start the `apt-cache` docker container provided with pumpos. This container runs
+locally on your host workstation and serves all packages to download as a proxy from your local
+network which speeds up installation and build times of pumpos images a lot.
 
 To enable this caching layer:
 1. Go to the infrastructure sub-folder: `cd infrastructure`
 1. Build the `apt-cache` container image: `make build-apt-cache`
 1. Run the container: `make start-apt-cache`
 1. When finished, you can stop the container again: `make stop-apt-cache`
-1. If there are any issues, you can take a look at the logs which should show you some activity when having
-to fetch the packages from the actual remote repository to cache them: `make logs-apt-cache`
+1. If there are any issues, you can take a look at the logs which should show you some activity when
+having to fetch the packages from the actual remote repository to cache them: `make logs-apt-cache`
 
-Now, you have to provide the proxy's address as an apt host to the pumpos installation configuration. Make
-sure to provide it when running `./pumpos.sh os-config` as well as entering a valid mirror (suggestions are
-already given during the configuration phase).
+Now, you have to provide the proxy's address as an apt host to the pumpos installation
+configuration. Make sure to provide it when running `./pumpos.sh os-config` as well as entering a
+valid mirror (suggestions are already given during the configuration phase).
 
-The resulting `pumpos.conf` should look similar to the following example:
-```text
-pumpos
-piu
-piu
-nvidia
-http://<some ip v4 address>:3142
-eu.archive.ubuntu.com/ubuntu/
+The resulting `pumpos.cfg` should look similar to the following example:
+```bash
+PUMPOS_CONFIG_HOSTNAME=piu
+PUMPOS_CONFIG_USERNAME=piu
+PUMPOS_CONFIG_PASSWORD=piu
+PUMPOS_CONFIG_GPU_DRIVER=nvidia
+PUMPOS_CONFIG_PACKAGES=piu
+PUMPOS_CONFIG_APT_HOST=http://<some ip v4 address>:3142
+PUMPOS_CONFIG_APT_MIRROR=eu.archive.ubuntu.com/ubuntu/
 ```
-
-## Complete flow for a full deployment for cabinet use with SGL
-The following commands are to be run in order if you already know what you are doing. If you have no clue what these
-commands are about, you are advised to carefully read the instructions of
-[this section](#creating-a-physical-disk-image-deploying-data-and-configuration) first.
-
-Preparations:
-1. Connect external drive or prepare local folder
-1. Either mount your drive on `/mnt/pumpos/piu` or replace it if required.
-1. Have `pumpdata` prepared and located next to `pumpos`
-1. Have `pumptools` repo or dist package prepared and located next to `pumpos`
-1. Have `sgl` repo or dist package prepared and located next to `pumpos`
-1. Have `sgldata` repo or dist package prepared and localted next to `pumpos`
-1. Optional: Update the entries in `conf/pumptools-network.conf` with your pumpnet credentials and copy the certificate
-files from pumpnet to the `dist/shared/certs` folder, no further sub-folders!
-
-Steps:
-1. Skip the following OS install process if deployment to local folder.
-    1. `./pumpos.sh os-config pumpos.conf`
-    1. `./pumpos.sh os-install ./pumpos.conf`
-    1. Finish OS install process on target hardware
-    1. Plug disk back into workstation
-1. `./pumpos.sh deploy-base /mnt/pumpos/piu`
-1. `./pumpos.sh deploy-data /mnt/pumpos/piu ../pumpdata/data local`
-1. `./pumpos.sh deploy-sgl /mnt/pumpos/piu ../sgl/build/docker/package/sgl-linux.zip ../sgldata/data/piu`
-1. `./pumpos.sh deploy-pumptools /mnt/pumpos/piu ../pumptools/build/docker/pumptools.zip`
-1. `./pumpos.sh conf-pumptools /mnt/pumpos/piu ./conf/pumptools-cabinet.conf`
-1. `./pumpos.sh conf-boot /mnt/pumpos/piu sgl`
-1. If you have a save backup of some old deployment to restore: `./pumpos.sh deploy-save /mnt/pumpos/piu`
-1. If you want to enable pumpnet on all configured games: `./pumpos.sh conf-pumptools /mnt/pumpos/piu ./conf/pumptools-network.conf`
 
 ## License
 Source code license is the Unlicense; you are permitted to do with this as thou

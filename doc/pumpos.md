@@ -49,11 +49,6 @@ outweighed them...and you can still go for a static build and never update if
 that's your desire.
 
 ## User prompts during installation
-### Configure console-setup
-This package configuration menu pops up during the `debootstrap` phase and you
-have to select a character set to support for the console. Otherwise, the
-installation process does not continue.
-
 ### Select a drive to install the bootloader on
 During installation of the Linux kernel, which appears in the chroot
 installation phase, you are prompted to select a drive to install the grub
