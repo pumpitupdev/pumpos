@@ -296,6 +296,39 @@ PUMPOS_CONFIG_APT_HOST=http://<some ip v4 address>:3142
 PUMPOS_CONFIG_APT_MIRROR=eu.archive.ubuntu.com/ubuntu/
 ```
 
+## Troubleshooting
+### On-board sound is not installed as sound device 0
+If you don't get any sound or applications are failing to start with errors related to sound
+devices, check if your on-board sound card (assuming that's the one you want to use), is enumerated
+as sound device 0:
+```bash
+cat /proc/asound/cards
+```
+
+Example output:
+```text
+ 0 [NVidia         ]: HDA-Intel - HDA NVidia
+                      HDA NVidia at 0xf7080000 irq 67
+ 1 [Generic        ]: HDA-Intel - HD-Audio Generic
+                      HD-Audio Generic at 0xf7500000 irq 68
+```
+
+In the example above, the `Generic` device which is the on-board sound was not enumerated as device
+`0` for some reason. In order to make the applications use it correctly, edit 
+`/usr/share/alsa/alsa.conf` to set the default card accordingly, e.g. for device `1`:
+```text
+defaults.pcm.card 1
+defaults.ctl.card 1
+```
+
+#### OpenITG
+Defaults to `hw:0` and if your on-board sound is not device `0`, but `hw:1`, add the following line
+to the `Data/Static.ini` file:
+
+```text
+SoundDevice=hw:1
+```
+
 ## License
 Source code license is the Unlicense; you are permitted to do with this as thou
 wilt. For details, please refer to the [LICENSE file](LICENSE) included with the
