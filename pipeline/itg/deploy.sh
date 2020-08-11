@@ -33,6 +33,8 @@ set -e
 "$PUMPOS_SCRIPT" deploy-itg-mame-ddrio "$PUMPOS_ROOT" "$DDR_MAME_DDRIO_ZIP_PATH"
 "$PUMPOS_SCRIPT" deploy-itg-mame-roms "$PUMPOS_ROOT" "$DDR_MAME_ROMS_PATH"
 
+"$PUMPOS_SCRIPT" deploy-dir "itg-data" "$PUMPOS_ROOT" "$ITG_DATA_PATH"
+
 # "Configure" step applies different StepMania configuration files after OpenITG dist package is depoyed
 "$PUMPOS_SCRIPT" deploy-dir "itg-openitg-conf" "$PUMPOS_ROOT" "$DIST_DIR/itg/openitg/pumpos"
 
