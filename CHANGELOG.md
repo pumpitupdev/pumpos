@@ -1,4 +1,6 @@
 # Release history
+## 1.06
+
 ## 1.05
 * sgl: Dist files with optional support for piu (pro) button board
 * Readme: Add short version with commands only for full cabinet deployment
