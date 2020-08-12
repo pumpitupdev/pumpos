@@ -30,6 +30,12 @@ return {
     },
 
     screen = {
+        attract = {
+            font = "OpenSans-Regular.ttf",
+            default_game_timeout_id = 0,
+            default_game_timeout_duration_sec = 0,
+        },
+        
         boot = {
             title = "boot.png",
             min_duration_ms = 2000
