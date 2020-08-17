@@ -28,6 +28,9 @@ amixer -q set Master 96% unmute
 # Fix permissions to allow normal user access to snd devices
 chmod -R a+rw /dev/snd
 
+# Fix access permission issues with IPC semaphores by adding the user to the audio group
+usermod -a -G audio $(id -un 1000)
+
 # Fix permissions for accessing PIUIO as normal user
 printf '%s' '
 SUBSYSTEM=="usb", ATTRS{idVendor}=="0547", MODE="0666"
