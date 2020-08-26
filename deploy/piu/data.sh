@@ -62,8 +62,8 @@ data_deploy_game()
 
 data_deploy()
 {
-	local target_pumpos_dir="$1"
-	local piu_data_dir="$2"
+    local target_pumpos_dir="$1"
+    local piu_data_dir="$2"
     local lib_type="$3"
     local limit_game_version="$4"
 
@@ -128,6 +128,6 @@ fi
 target_pumpos_dir="$1"
 data_dir="$2"
 lib_type="$3"
-single_delpoyment="$4"
+single_deployment="$4"
 
-data_deploy "$target_pumpos_dir" "$data_dir" "$lib_type" "$single_delpoyment"
+data_deploy "$target_pumpos_dir" "$data_dir" "$lib_type" "$single_deployment"
