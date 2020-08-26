@@ -10,7 +10,7 @@
 root_path="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 if [ "$#" != "3" ]; then
-    echo "Usage: $0 <game res> <audio freq>"
+    echo "Usage: $0 <game> <game res> <audio freq>"
     echo "  game: The game to start, e.g. 01_1st"
     echo "  game res: Either 480 or 720 for SD or HD resolution games."
     echo "  audio freq: Either 44 for 44100 hz or 48 for 48000 hz audio playback frequency."

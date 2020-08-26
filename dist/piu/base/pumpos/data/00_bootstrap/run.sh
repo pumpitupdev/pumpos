@@ -19,6 +19,6 @@ run_cfg_path="$1"
 
 source "$run_cfg_path"
 
-xorg_conf_path="$ROOT_PATH/xorg.conf/$XORG_CONF"
+xorg_conf_path="$ROOT_PATH/xorg.conf/$XORG_CONF.conf"
 
 "$ROOT_PATH/cabinet-startx.sh" "$GAME" "$xorg_conf_path" "$RESOLUTION_Y" "$AUDIO_FREQ_KHZ"

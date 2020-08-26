@@ -10,8 +10,8 @@
 # Root path is path of this script
 root_path="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-if [ "$#" != "3" ]; then
-    echo "Usage: $0 <xorg.conf> <game res> <audio freq>"
+if [ "$#" != "4" ]; then
+    echo "Usage: $0 <game> <xorg.conf> <game res> <audio freq>"
     echo "  game: The game to start, e.g. 01_1st"
     echo "  xorg.conf: Path to an xorg conf file to use."
     echo "  game res: Either 480 or 720 for SD or HD resolution games."
