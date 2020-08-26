@@ -127,20 +127,20 @@ into the `dist/piu/base/pumpos/data/00_bootstrap/certs` folder without adding
 further sub-folders. The certs will be deployed on one of the next steps.
 1. Deploy the pumpos base directory structure by running the `deploy-dir` command:
 ```bash
-./pumpos.sh deploy-base /mnt/pumpos/pumpos ./dist/base/pumpos
+./pumpos.sh deploy-dir pumpos /mnt/pumpos/pumpos ./dist/base/pumpos
 ```
 1. Deploy the piu base directory structure by running the `deploy-dir` command:
 ```bash
-./pumpos.sh deploy-base /mnt/pumpos/pumpos ./dist/piu/base/pumpos
+./pumpos.sh deploy-dir pumpos-piu /mnt/pumpos/pumpos ./dist/piu/base/pumpos
 ```
 1. Deploy game data to the disk by using the `deploy-piu-data` command. You can
 either batch deploy multiple games:
 ```bash
-./pumpos.sh deploy-data /mnt/pumpos/pumpos /path/to/pumpdata/data local
+./pumpos.sh deploy-piu-data /mnt/pumpos/pumpos /path/to/pumpdata/data local
 ```
 or single games
 ```bash
-./pumpos.sh deploy-data /mnt/pumpos/piu /path/to/pumpdata/data local 01_1st
+./pumpos.sh deploy-piu-data /mnt/pumpos/piu /path/to/pumpdata/data local 01_1st
 ```
 1. Deploy pumptools by running the `deploy-piu-pumptools` command. You can either
 batch deploy to multiple games:

@@ -61,7 +61,7 @@ case "$1" in
     conf-boot)
         "$ROOT_PATH/conf/boot.sh" "${@:2}"
         ;;
-    conf-pumptools)
+    conf-piu-pumptools)
         "$ROOT_PATH/conf/piu/pumptools.sh" "${@:2}"
         ;;
 
