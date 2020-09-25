@@ -1,3 +1,6 @@
 #!/usr/bin/env sh
 
-/pumpos/data/00_bootstrap/run.sh /pumpos/data/03_3rd/run.cfg
+# Root path is path of this script
+readonly ROOT_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+"$ROOT_PATH/../00_bootstrap/run.sh" "$ROOT_PATH/run.cfg"
