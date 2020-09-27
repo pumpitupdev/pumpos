@@ -18,7 +18,7 @@ deploy_dir()
     verify_file_exists "$dist_dir"
 
     if [ ! -e "$target_pumpos_dir/boot.sh" ]; then
-        log_error "Target pumpos folder $target_pumpos_dir does not contain boot.sh."
+        log_error "Target pumpos folder $target_pumpos_dir does not contain boot.sh. Check that you have the right path selected and your disk is mounted correctly."
         exit 1
     fi
 
