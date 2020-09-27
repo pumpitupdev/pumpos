@@ -129,6 +129,11 @@ further sub-folders. The certs will be deployed on one of the next steps.
 ```bash
 ./pumpos.sh deploy-dir pumpos /mnt/pumpos/pumpos ./dist/base/pumpos
 ```
+If you get an error that `boot.sh` is missing, double check that your disk is
+mounted (`mount` and check if `/dev/sdX` is available at the correct directory
+location, e.g. `/mnt/pumpos`). If that's fine or you deploy to a local folder
+for a dev setup or testing, manually create an empty `boot.sh`, 
+`touch /mnt/pumpos/boot.sh`, and re-run the above command.
 1. Deploy the piu base directory structure by running the `deploy-dir` command:
 ```bash
 ./pumpos.sh deploy-dir pumpos-piu /mnt/pumpos/pumpos ./dist/piu/base/pumpos
