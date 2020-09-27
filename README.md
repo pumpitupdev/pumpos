@@ -165,7 +165,7 @@ bootstrapping the games, you have to deploy the binaries and assets:
 
 ##### Configure
 1. Configure the boot process of pumpos with the `conf-boot` command defining how the
-games are bootstrapped:
+games are bootstrapped when the machine/OS is started:
     1. Single game bootstrapping: e.g. to always boot 01_1st:
     ```bash
     ./pumpos.sh conf-boot /mnt/pumpos/pumpos game 01_1st
