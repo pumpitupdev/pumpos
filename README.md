@@ -145,7 +145,7 @@ either batch deploy multiple games:
 ```
 or single games
 ```bash
-./pumpos.sh deploy-piu-data /mnt/pumpos/piu /path/to/pumpdata/data local 01_1st
+./pumpos.sh deploy-piu-data /mnt/pumpos/pumpos /path/to/pumpdata/data local 01_1st
 ```
 1. Deploy pumptools by running the `deploy-piu-pumptools` command. You can either
 batch deploy to multiple games:
