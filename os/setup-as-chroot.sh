@@ -208,10 +208,12 @@ install_packages()
 
 remove_apt_get_proxy()
 {
-    echo ""
-    echo "##### Removing apt get proxy (package caching)... #####"
-
-    rm /etc/apt/apt.conf.d/01proxy
+    Proxy_File="/etc/apt/apt.conf.d/01proxy"
+    if [ -f "$Proxy_File" ]; then
+        echo ""
+        echo "##### Removing apt get proxy (package caching)... #####"
+        rm $Proxy_File
+    fi
 }
 
 setup_pumpos_boot_env()
