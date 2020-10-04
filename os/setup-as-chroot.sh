@@ -208,8 +208,9 @@ install_packages()
 
 remove_apt_get_proxy()
 {
-    proxy_file="/etc/apt/apt.conf.d/01proxy"
-    if [ -f "$Proxy_File" ]; then
+    local proxy_file="/etc/apt/apt.conf.d/01proxy"
+
+    if [ -f "$proxy_file" ]; then
         echo ""
         echo "##### Removing apt get proxy (package caching)... #####"
         rm $proxy_file
