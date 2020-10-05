@@ -158,10 +158,15 @@ batch deploy to multiple games:
 ```
 
 ##### Optional: deploy SGL
-1. Optional: If you want to use [SGL](https://dev.s-ul.eu/hackitup/sgl) for
+1. If you want to use [SGL](https://dev.s-ul.eu/hackitup/sgl) for
 bootstrapping the games, you have to deploy the binaries and assets:
-`./pumpos.sh deploy-sgl /mnt/pumpos/piu /path/to/sgl-linux.zip /path/to/sgldata/data/piu`
-
+```bash
+./pumpos.sh deploy-sgl /mnt/pumpos/pumpos /path/to/sgl-linux.zip /path/to/sgldata/data/piu
+```
+2. Deploy the piu sgl directory by running the `deploy-dir` command:
+```bash
+./pumpos.sh deploy-dir piu-sgl /mnt/pumpos/pumpos ./dist/piu/sgl/pumpos
+```
 
 ##### Configure
 1. Configure the boot process of pumpos with the `conf-boot` command defining how the
