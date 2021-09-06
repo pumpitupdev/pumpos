@@ -6,6 +6,7 @@
 input a lot (see readme)
 * Base OS does not need to be booted anymore on the target hardware for post installation. All
 installation is done in the chroot environment
+* Bugfix: Execute grub-install manually, auto grub-install got removed from package installation
 
 ## 1.05
 * sgl: Dist files with optional support for piu (pro) button board
