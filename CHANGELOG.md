@@ -1,4 +1,6 @@
 # Release history
+## 1.07
+
 ## 1.06
 * Use pumpos base system as a foundation for ITG 2 cabinets
 * Refactor deployment infrastructure to enable deploying of PIU games or ITG 2 and ddr-mame

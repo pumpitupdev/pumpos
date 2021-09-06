@@ -1,5 +1,5 @@
 # Pumpos: Create, deploy, configure and manage a setup for running Pump It Up and In The Groove
-Version: 1.06</br>
+Version: 1.07</br>
 [Release history](CHANGELOG.md)
 
 ## What is this all about?
