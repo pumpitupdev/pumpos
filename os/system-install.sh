@@ -82,7 +82,8 @@ chroot_exec_install()
         "$PUMPOS_DATA/$CHROOT_SETUP_SCRIPT" \
         "$config_hostname" \
         "$config_username" \
-        "$config_password"
+        "$config_password" \
+        "$target_disk"
 }
 
 unmount_partition()

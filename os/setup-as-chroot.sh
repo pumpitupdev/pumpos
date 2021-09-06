@@ -65,6 +65,8 @@ install_kernel()
 
 configure_grub()
 {
+    local target_disk="$1"
+
     echo ""
     echo "##### Configure grub... #####"
 
@@ -76,6 +78,11 @@ configure_grub()
     sed -i -- "s/GRUB_CMDLINE_LINUX_DEFAULT=\"quiet splash\"/GRUB_CMDLINE_LINUX_DEFAULT=\"debug nosplash\"/g" "/etc/default/grub"
 
     grub-mkconfig -o /boot/grub/grub.cfg
+
+    echo "Install grub to: $target_disk"
+
+    # In the past, this was executed when installing the grub packages automatically
+    grub-install -v --target=i386-pc --recheck "/dev/$target_disk"
 }
 
 install_network_stuff()
@@ -268,14 +275,15 @@ exit 0' > /pumpos/boot.sh
 # Main entry point #
 ####################
 
-if [ $# -lt 3 ]; then
-    echo "Usage: $0 <hostname> <username> <password>"
+if [ $# -lt 4 ]; then
+    echo "Usage: $0 <hostname> <username> <password> <disk on host>"
     exit 1
 fi
 
 config_hostname="$1"
 config_username="$2"
 config_password="$3"
+target_disk="$4"
 
 # Exit if any command fails
 set -e
@@ -287,7 +295,7 @@ set_locale
 set_apt_repos
 apt_upgrade
 install_kernel
-configure_grub
+configure_grub "$target_disk"
 install_network_stuff
 set_hostname "$config_hostname"
 set_root_password "$config_password"
